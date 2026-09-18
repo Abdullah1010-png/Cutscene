@@ -68,6 +68,13 @@
           <button type="button" class="btn filter-btn rounded-pill px-4 py-3" data-filter="anime">Anime</button>
         </div>
 
+        <div class="language-filter d-flex align-items-center gap-2 flex-wrap mb-4" id="languageFilter">
+          <span class="language-label">Language:</span>
+          <button type="button" class="language-btn active" data-language="all">All</button>
+          <button type="button" class="language-btn" data-language="AR"><span class="language-badge ar-badge">AR</span> عربي</button>
+          <button type="button" class="language-btn" data-language="EN"><span class="language-badge en-badge">E</span> English</button>
+        </div>
+
         <div class="row g-4" id="moviesContainer"></div>
         <div id="noResults" class="text-center text-muted py-5 d-none">No movies match your filters.</div>
       </div>
@@ -79,7 +86,7 @@
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-dark text-white border-secondary">
           <div class="modal-header border-secondary"><h5 class="modal-title" id="modalTitle">Details</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button></div>
-          <div class="modal-body"><div class="row"><div class="col-md-4"><img id="modalImage" src="" alt="Poster" class="img-fluid rounded" /></div><div class="col-md-8"><h3 id="modalTitleText"></h3><p><strong>Year:</strong> <span id="modalYear"></span></p><p><strong>Rating:</strong> <span id="modalRating"></span></p><p><strong>Description:</strong> <span id="modalDescription">No description available.</span></p><div id="modalImdbContainer" class="d-none mt-2"><a id="modalImdbLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm">View on IMDb <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div><button class="btn btn-danger mt-3" id="modalAddWatchlist">+ Add to Watchlist</button><span id="modalWatchlistStatus" class="ms-3 text-success d-none">✓ In your watchlist</span></div></div></div>
+          <div class="modal-body"><div class="row"><div class="col-md-4"><img id="modalImage" src="" alt="Poster" class="img-fluid rounded" /></div><div class="col-md-8"><h3 id="modalTitleText"></h3><p><strong id="modalYearLabel">Year:</strong> <span id="modalYear"></span></p><p><strong id="modalRatingLabel">Rating:</strong> <span id="modalRating"></span></p><p><strong id="modalDescriptionLabel">Description:</strong> <span id="modalDescription">No description available.</span></p><div id="modalImdbContainer" class="d-none mt-2"><a id="modalImdbLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm">View on IMDb <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div><button class="btn btn-danger mt-3" id="modalAddWatchlist">+ Add to Watchlist</button><span id="modalWatchlistStatus" class="ms-3 text-success d-none">✓ In your watchlist</span></div></div></div>
           <div class="modal-footer border-secondary"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
         </div>
       </div>
