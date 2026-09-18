@@ -10,39 +10,39 @@
 
   const arabicShows = [
     [2001,"Paranormal","ما وراء الطبيعة",2020,7.9,"https://www.imdb.com/title/tt12411074/",["drama","horror","mystery","thriller"]],[2002,"Grand Hotel","جراند أوتيل",2015,8.2,"https://www.imdb.com/title/tt5857914/",["drama","crime","mystery","thriller"]],[2003,"El Nos","الناس",2025,7.4,"https://www.imdb.com/title/tt39970797/",["comedy","crime","drama","history"]],[2004,"Al Maddah","المداح",2021,7.0,"https://www.imdb.com/title/tt15685516/",["drama","horror","mystery"]]
-  ].map(([id,title,titleAr,year,rating,imdblink,genre]) => ({id,title,titleAr,year,rating:String(rating),imdblink,genre,language:"AR",image:poster(title,year,"AR • عربي"),description:`مسلسل عربي: ${titleAr}`,descriptionEn:title}));
+  ].map(([id,title,titleAr,year,rating,imdblink,genre]) => ({id,title,titleAr,year,rating:String(rating),imdblink,genre,language:"AR",image:poster(titleAr,year,"AR • عربي"),description:`مسلسل عربي: ${titleAr}`,descriptionEn:title}));
 
   function poster(title, year, label) {
-    const safe=String(title).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    const rtl=/[\u0600-\u06FF]/.test(title);
+    const safe=String(title).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); const rtl=/[\u0600-\u06FF]/.test(title);
     const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#171a20"/><stop offset="1" stop-color="#30284f"/></linearGradient></defs><rect width="600" height="900" fill="url(#g)"/><rect x="24" y="24" width="552" height="852" rx="24" fill="none" stroke="#8066ff" stroke-width="4"/><text x="300" y="115" text-anchor="middle" fill="#8066ff" font-size="30" font-family="Arial" font-weight="700">CUTSCENE</text><text x="300" y="430" text-anchor="middle" ${rtl?'direction="rtl"':''} fill="white" font-size="48" font-family="Arial" font-weight="700">${safe}</text><text x="300" y="500" text-anchor="middle" fill="#b9b5c9" font-size="26" font-family="Arial">${year}</text><text x="300" y="785" text-anchor="middle" fill="#ed5b69" font-size="28" font-family="Arial" font-weight="700">${label}</text></svg>`;
     return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
   }
 
-  function addMovieExtras(){
-    if(typeof moviesData==="undefined"||!Array.isArray(moviesData)) return false;
-    const ids=new Set(moviesData.map(m=>Number(m.id))); const extras=[...carMovies,...arabicMoviesExtra].filter(m=>!ids.has(Number(m.id)));
-    if(extras.length) moviesData.push(...extras); if(typeof renderMovies==="function") renderMovies(); return true;
-  }
-  function addTVExtras(){
-    if(typeof tvData==="undefined"||!Array.isArray(tvData)) return false;
-    const ids=new Set(tvData.map(m=>Number(m.id))); const extras=arabicShows.filter(m=>!ids.has(Number(m.id)));
-    if(extras.length) tvData.push(...extras); if(typeof renderTV==="function") renderTV(); return true;
-  }
+  function addMovieExtras(){if(typeof moviesData==="undefined"||!Array.isArray(moviesData))return false;const ids=new Set(moviesData.map(m=>Number(m.id)));const extras=[...carMovies,...arabicMoviesExtra].filter(m=>!ids.has(Number(m.id)));if(extras.length)moviesData.push(...extras);if(typeof renderMovies==="function")renderMovies();return true;}
+  function addTVExtras(){if(typeof tvData==="undefined"||!Array.isArray(tvData))return false;const ids=new Set(tvData.map(m=>Number(m.id)));const extras=arabicShows.filter(m=>!ids.has(Number(m.id)));if(extras.length)tvData.push(...extras);if(typeof renderTV==="function")renderTV();return true;}
 
-  function findUrl(card){
-    if(card.dataset.imdblink) return card.dataset.imdblink;
-    const title=card.querySelector("h4")?.textContent.trim();
-    if(!title) return "";
-    const sources=[JSON.parse(localStorage.getItem("movies")||"[]"),JSON.parse(localStorage.getItem("tvShows")||"[]")];
-    for(const list of sources){const item=list.find(x=>String(x.title).trim()===title);if(item?.imdblink)return item.imdblink;}
-    return "";
+  function decorateTV(){
+    document.querySelectorAll(".tv-shows-careds").forEach(card=>{
+      const title=card.querySelector("h4")?.textContent.trim(); const item=(typeof tvData!=="undefined"?tvData:[]).find(x=>x.title===title||x.titleAr===title);
+      if(!item)return;
+      card.dataset.language=item.language||"EN"; card.dataset.imdblink=item.imdblink||"";
+      const heading=card.querySelector("h4"); if(item.language==="AR"){heading.textContent=item.titleAr||item.title;heading.dir="rtl";heading.style.textAlign="right";}
+      const posterBox=card.querySelector(".tv-shows-postar"); if(posterBox&&!posterBox.querySelector(".language-badge-card")){const badge=document.createElement("span");badge.className=`language-badge-card ${item.language==="AR"?"ar-badge":"en-badge"}`;badge.textContent=item.language==="AR"?"AR":"E";posterBox.appendChild(badge);}
+    });
   }
 
-  document.addEventListener("click",e=>{
-    const card=e.target.closest(".movies-careds,.tv-shows-careds"); if(!card)return;
-    const url=findUrl(card); if(url){e.preventDefault();e.stopImmediatePropagation();window.location.href=url;}
-  },true);
+  function addTVLanguageFilter(){
+    if(document.getElementById("tvLanguageFilter"))return;
+    const heading=document.querySelector("#tvShowsContainer")?.parentElement; if(!heading)return;
+    const box=document.createElement("div"); box.id="tvLanguageFilter";box.className="d-flex align-items-center gap-2 flex-wrap mb-4";
+    box.innerHTML=`<span>Language:</span><button class="language-btn active" data-lang="all">All</button><button class="language-btn" data-lang="AR">AR عربي</button><button class="language-btn" data-lang="EN">E English</button>`;
+    document.getElementById("tvShowsContainer").before(box);
+    box.addEventListener("click",e=>{const btn=e.target.closest(".language-btn");if(!btn)return;box.querySelectorAll(".language-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");const lang=btn.dataset.lang;document.querySelectorAll("#tvShowsContainer .tv-shows-careds").forEach(card=>{card.parentElement.style.display=lang==="all"||card.dataset.language===lang?"":"none";});});
+  }
 
-  let tries=0; const timer=setInterval(()=>{const a=addMovieExtras(),b=addTVExtras();if((a||b)||++tries>50)clearInterval(timer);},150);
+  function findUrl(card){if(card.dataset.imdblink)return card.dataset.imdblink;const title=card.querySelector("h4")?.textContent.trim();if(!title)return"";for(const key of ["movies","tvShows"]){const list=JSON.parse(localStorage.getItem(key)||"[]");const item=list.find(x=>String(x.title).trim()===title);if(item?.imdblink)return item.imdblink;}return"";}
+
+  document.addEventListener("click",e=>{const card=e.target.closest(".movies-careds,.tv-shows-careds");if(!card)return;const url=findUrl(card);if(url){e.preventDefault();e.stopImmediatePropagation();window.location.href=url;}},true);
+
+  let tries=0;const timer=setInterval(()=>{const a=addMovieExtras(),b=addTVExtras();decorateTV();if(b)addTVLanguageFilter();if((a||b)||++tries>50)clearInterval(timer);},150);
 })();
