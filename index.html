@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineTrack - Movie Watchlist</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-icon">▶</div>
+        <span>Cut<span>scene</span></span>
+    </div>
+
+    <div class="nav-links">
+        <a href="#" class="active">Library</a>
+        <a href="#">Movies</a>
+        <a href="#">TV Shows</a>
+    </div>
+
+    <div class="nav-right">
+        <div class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="text" placeholder="Search titles...">
+        </div>
+
+        <button class="theme-btn" id="themeToggle">☀️</button>
+
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=12" alt="Profile">
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <section class="hero">
+        <div>
+            <p class="eyebrow">YOUR PERSONAL MOVIE LIBRARY</p>
+            <h1>My Watchlist</h1>
+            <p class="subtitle">Keep track of movies you want to watch.</p>
+        </div>
+        <button class="add-btn" id="openAddModal">+ Add Movie</button>
+    </section>
+
+    <section class="toolbar">
+        <div class="watchlist-count" id="movieCount">0 movies</div>
+        <select id="sortSelect">
+            <option value="date">Recently Added</option>
+            <option value="rating">Highest Rated</option>
+            <option value="name">Name</option>
+            <option value="year">Year</option>
+        </select>
+    </section>
+
+    <section class="movie-grid" id="movieGrid"></section>
+</main>
+
+<div class="modal" id="addModal">
+    <div class="modal-content">
+        <button class="close-btn" data-close="addModal">×</button>
+        <h2>Add Movie</h2>
+        <form id="movieForm">
+            <input id="movieTitle" type="text" placeholder="Movie title" required>
+            <input id="movieYear" type="number" placeholder="Year" required>
+            <input id="movieRating" type="number" min="0" max="10" step="0.1" placeholder="Rating" required>
+            <input id="movieImage" type="url" placeholder="Poster image URL" required>
+            <button type="submit" class="submit-btn">Add Movie</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="detailsModal">
+    <div class="modal-content" id="detailsContent"></div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
