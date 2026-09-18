@@ -1,4 +1,4 @@
-# CineTrack - Movie Watchlist
+# Cutscene - Movie Watchlist
 
 A responsive movie watchlist website built with HTML, CSS, and JavaScript.
 
@@ -23,7 +23,7 @@ A responsive movie watchlist website built with HTML, CSS, and JavaScript.
 ## Project Structure
 
 ```text
-CineTrack-Watchlist/
+Cutscene/
 ├── index.html
 ├── css/
 │   └── style.css
@@ -35,7 +35,7 @@ CineTrack-Watchlist/
 
 ## Live Demo
 
-Enable GitHub Pages from the repository settings to publish the site.
+GitHub Pages: https://abdullah1010-png.github.io/Cutscene/
 
 ## Author
 
