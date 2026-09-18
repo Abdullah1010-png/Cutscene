@@ -135,46 +135,88 @@ function openDetails(show) {
 }
 
 function setupControls() {
-  document.querySelectorAll("#genreFilter .filter-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      document.querySelectorAll("#genreFilter .filter-btn").forEach(b => b.classList.remove("active"));
-      button.classList.add("active");
-      currentGenre = button.dataset.filter || "all";
-      renderTV();
-    });
+
+  // Categories
+  $("genreSelect")?.addEventListener("change", e => {
+
+    currentGenre = e.target.value || "all";
+
+    renderTV();
+
   });
 
-  document.querySelectorAll("#languageFilter .language-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      document.querySelectorAll("#languageFilter .language-btn").forEach(b => b.classList.remove("active"));
-      button.classList.add("active");
-      currentLanguage = button.dataset.language || "all";
-      renderTV();
-    });
-  });
+  // Language
+  document
+    .querySelectorAll("#languageFilter .language-btn")
+    .forEach(button => {
 
+      button.addEventListener("click", () => {
+
+        document
+          .querySelectorAll("#languageFilter .language-btn")
+          .forEach(b => b.classList.remove("active"));
+
+        button.classList.add("active");
+
+        currentLanguage =
+          button.dataset.language || "all";
+
+        renderTV();
+
+      });
+
+    });
+
+  // Search
   $("searchInput")?.addEventListener("input", e => {
+
     currentSearch = e.target.value;
+
     renderTV();
-  });
-  $("tvSearchForm")?.addEventListener("submit", e => e.preventDefault());
-  $("sortSelect")?.addEventListener("change", e => {
-    currentSort = e.target.value;
-    renderTV();
+
   });
 
+  $("tvSearchForm")?.addEventListener("submit", e => {
+    e.preventDefault();
+  });
+
+  // Sort
+  $("sortSelect")?.addEventListener("change", e => {
+
+    currentSort = e.target.value;
+
+    renderTV();
+
+  });
+
+  // Watchlist
   document.addEventListener("click", event => {
-    const button = event.target.closest("#modalAddWatchlist");
+
+    const button =
+      event.target.closest("#modalAddWatchlist");
+
     if (!button) return;
 
     const id = Number(button.dataset.id);
-    const index = watchlist.findIndex(item => Number(item.id) === id && (item.type || "movie") === "tv");
+
+    const index = watchlist.findIndex(
+      item =>
+        Number(item.id) === id &&
+        (item.type || "movie") === "tv"
+    );
 
     if (index >= 0) {
+
       watchlist.splice(index, 1);
-      button.textContent = "+ Add to Watchlist";
-      $("modalWatchlistStatus")?.classList.add("d-none");
+
+      button.textContent =
+        "+ Add to Watchlist";
+
+      $("modalWatchlistStatus")
+        ?.classList.add("d-none");
+
     } else {
+
       watchlist.push({
         id,
         type: "tv",
@@ -186,10 +228,16 @@ function setupControls() {
         language: button.dataset.language,
         dateAdded: Date.now()
       });
-      button.textContent = "Remove from Watchlist";
-      $("modalWatchlistStatus")?.classList.remove("d-none");
+
+      button.textContent =
+        "Remove from Watchlist";
+
+      $("modalWatchlistStatus")
+        ?.classList.remove("d-none");
     }
+
     saveWatchlist();
+
   });
 }
 
