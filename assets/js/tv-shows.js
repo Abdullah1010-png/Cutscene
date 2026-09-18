@@ -1,103 +1,39 @@
-let tvData = [];
-let currentFilter = "all";
-let currentSearch = "";
-let currentSort = "default";
+let tvData=[];
+let currentFilter="all";
+let currentSearch="";
+let currentSort="default";
 
-function loadTV() {
-  fetch("../assets/data/tv-shows.json?t=" + Date.now())
-    .then(res => { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
-    .then(data => {
-      tvData = data.map(item => ({
-        ...item,
-        genre: Array.isArray(item.genre) ? item.genre.map(g => String(g).toLowerCase()) : typeof item.genre === "string" ? [item.genre.toLowerCase()] : []
-      }));
-      localStorage.setItem("tvShows", JSON.stringify(tvData));
-      renderTV();
-    })
-    .catch(err => {
-      console.error("Failed to fetch tv-shows.json:", err);
-      try {
-        tvData = JSON.parse(localStorage.getItem("tvShows") || "[]");
-        renderTV();
-      } catch (e) {
-        const container = document.getElementById("tvContainer") || document.getElementById("tvShowsContainer");
-        if (container) container.innerHTML = `<p class="text-danger text-center py-4">Could not load TV shows data.</p>`;
-      }
-    });
+function loadTV(){
+  fetch("../assets/data/tv-shows.json?t="+Date.now()).then(res=>{if(!res.ok)throw new Error("HTTP "+res.status);return res.json();}).then(data=>{tvData=data.map(item=>({...item,genre:Array.isArray(item.genre)?item.genre.map(g=>String(g).toLowerCase()):typeof item.genre==="string"?[item.genre.toLowerCase()]:[]}));localStorage.setItem("tvShows",JSON.stringify(tvData));renderTV();}).catch(err=>{console.error("Failed to fetch tv-shows.json:",err);try{tvData=JSON.parse(localStorage.getItem("tvShows")||"[]");renderTV();}catch(e){const container=document.getElementById("tvContainer")||document.getElementById("tvShowsContainer");if(container)container.innerHTML=`<p class="text-danger text-center py-4">Could not load TV shows data.</p>`;}});
 }
 
-function sortItems(items) {
-  const sorted = [...items];
-  switch (currentSort) {
-    case "rating-desc": sorted.sort((a,b) => Number(b.rating||0)-Number(a.rating||0)); break;
-    case "rating-asc": sorted.sort((a,b) => Number(a.rating||0)-Number(b.rating||0)); break;
-    case "year-desc": sorted.sort((a,b) => Number(b.year||0)-Number(a.year||0)); break;
-    case "year-asc": sorted.sort((a,b) => Number(a.year||0)-Number(b.year||0)); break;
-    case "title-asc": sorted.sort((a,b) => String(a.title).localeCompare(String(b.title))); break;
-    case "title-desc": sorted.sort((a,b) => String(b.title).localeCompare(String(a.title))); break;
-  }
-  return sorted;
+function sortItems(items){const sorted=[...items];switch(currentSort){case "rating-desc":sorted.sort((a,b)=>Number(b.rating||0)-Number(a.rating||0));break;case "rating-asc":sorted.sort((a,b)=>Number(a.rating||0)-Number(b.rating||0));break;case "year-desc":sorted.sort((a,b)=>Number(b.year||0)-Number(a.year||0));break;case "year-asc":sorted.sort((a,b)=>Number(a.year||0)-Number(b.year||0));break;case "title-asc":sorted.sort((a,b)=>String(a.title).localeCompare(String(b.title)));break;case "title-desc":sorted.sort((a,b)=>String(b.title).localeCompare(String(a.title)));break;}return sorted;}
+
+function renderTV(){
+  const container=document.getElementById("tvContainer")||document.getElementById("tvShowsContainer"),noResults=document.getElementById("noResults");if(!container)return;const searchTerm=currentSearch.toLowerCase().trim();
+  let filtered=tvData.filter(item=>{const genreMatch=currentFilter==="all"||item.genre.includes(currentFilter.toLowerCase());const searchMatch=!searchTerm||String(item.title).toLowerCase().includes(searchTerm);return genreMatch&&searchMatch;});filtered=sortItems(filtered);container.innerHTML="";
+  if(!filtered.length){noResults?.classList.remove("d-none");return;}noResults?.classList.add("d-none");
+  filtered.forEach(item=>{const col=document.createElement("div");col.className="col-6 col-md-4 col-lg-4 col-xl-3";col.innerHTML=`<div class="tv-shows-careds" data-id="${item.id}" data-title="${escapeAttribute(item.title)}" data-year="${item.year}" data-rating="${item.rating}" data-image="${escapeAttribute(item.image)}" data-description="${escapeAttribute(item.description||"No description.")}" data-type="tv" data-imdblink="${escapeAttribute(item.imdblink||"")}"><div class="tv-shows-postar"><img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.title)}" loading="lazy" onerror="this.style.opacity='0.25'"><span class="content-type-badge">SERIES</span><span class="tv-shows-rating"><i class="fa-solid fa-star"></i> ${item.rating}</span><span class="poster-play"><i class="fa-solid fa-play"></i></span></div><div class="tv-card-info"><h4>${escapeHtml(item.title)}</h4><p>${item.year} <span>•</span> Series</p></div></div>`;container.appendChild(col);});
 }
 
-function renderTV() {
-  const container = document.getElementById("tvContainer") || document.getElementById("tvShowsContainer");
-  const noResults = document.getElementById("noResults");
-  if (!container) return;
-  const searchTerm = currentSearch.toLowerCase().trim();
-  let filtered = tvData.filter(item => {
-    const genreMatch = currentFilter === "all" || item.genre.includes(currentFilter.toLowerCase());
-    const searchMatch = !searchTerm || String(item.title).toLowerCase().includes(searchTerm);
-    return genreMatch && searchMatch;
-  });
-  filtered = sortItems(filtered);
-  container.innerHTML = "";
-  if (!filtered.length) { noResults?.classList.remove("d-none"); return; }
-  noResults?.classList.add("d-none");
+function escapeHtml(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]));}function escapeAttribute(value){return escapeHtml(value);}
 
-  filtered.forEach(item => {
-    const col = document.createElement("div"); col.className = "col-6 col-md-4 col-lg-4 col-xl-3";
-    col.innerHTML = `<div class="tv-shows-careds" data-id="${item.id}" data-title="${escapeAttribute(item.title)}" data-year="${item.year}" data-rating="${item.rating}" data-image="${escapeAttribute(item.image)}" data-description="${escapeAttribute(item.description || "No description.")}" data-type="tv" data-imdblink="${escapeAttribute(item.imdblink || "")}"><div class="tv-shows-postar"><img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x300?text=No+Image'"/><span class="tv-shows-rating">${item.rating}/10</span></div><h4>${escapeHtml(item.title)}</h4><p>${item.year}</p></div>`;
-    container.appendChild(col);
-  });
-}
+function setupFilters(){document.querySelectorAll(".filter-btn").forEach(btn=>btn.addEventListener("click",function(){document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));this.classList.add("active");currentFilter=this.dataset.filter||"all";renderTV();}));document.getElementById("searchInput")?.addEventListener("input",function(){currentSearch=this.value;renderTV();});document.getElementById("tvSearchForm")?.addEventListener("submit",e=>e.preventDefault());document.getElementById("sortSelect")?.addEventListener("change",function(){currentSort=this.value;renderTV();});}
 
-function escapeHtml(value) { return String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c])); }
-function escapeAttribute(value) { return escapeHtml(value); }
+function injectTVStyles(){if(document.getElementById("cutsceneTVCardStyles"))return;const style=document.createElement("style");style.id="cutsceneTVCardStyles";style.textContent=`
+.tv-shows-careds{position:relative;cursor:pointer;opacity:0;transform:translateY(16px);animation:cutsceneSeriesIn .55s ease forwards}.tv-shows-careds:hover .tv-shows-postar{transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,.34);border-color:rgba(128,102,255,.55)}@keyframes cutsceneSeriesIn{to{opacity:1;transform:translateY(0)}}
+.tv-shows-postar{position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:16px;background:#20232c;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 26px rgba(0,0,0,.18);transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}.tv-shows-postar img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease,filter .45s ease}.tv-shows-careds:hover .tv-shows-postar img{transform:scale(1.045);filter:brightness(.76)}
+.tv-shows-postar:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(5,7,12,.92),rgba(5,7,12,.15) 46%,transparent 72%);opacity:.65;transition:opacity .35s ease;pointer-events:none}.tv-shows-careds:hover .tv-shows-postar:after{opacity:.92}
+.content-type-badge{position:absolute;left:10px;bottom:10px;z-index:4;padding:5px 8px;border-radius:7px;background:rgba(8,10,15,.72);color:#fff;border:1px solid rgba(255,255,255,.12);font-size:9px;font-weight:800;letter-spacing:1.3px}.tv-shows-rating{position:absolute;top:10px;left:10px;z-index:4;display:inline-flex;align-items:center;gap:5px;background:rgba(12,14,19,.82);backdrop-filter:blur(8px);color:#fff;border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700;border:1px solid rgba(255,255,255,.14)}.tv-shows-rating i{color:#ffd166;font-size:10px}
+.poster-play{position:absolute;left:50%;top:50%;z-index:5;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(128,102,255,.94);color:#fff;transform:translate(-50%,-45%) scale(.72);opacity:0;box-shadow:0 10px 28px rgba(0,0,0,.35);transition:opacity .3s ease,transform .3s ease}.poster-play i{font-size:14px;margin-left:2px}.tv-shows-careds:hover .poster-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.tv-card-info{padding:10px 2px 2px}.tv-card-info h4{color:var(--color-text);font-size:14px;line-height:1.35;margin:0 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tv-shows-careds:hover .tv-card-info h4{color:var(--color-accent)}.tv-card-info p{color:var(--color-text-subtle);font-size:11px;margin:0}.tv-card-info p span{opacity:.55;margin:0 3px}
+@media(max-width:767.98px){.tv-shows-postar{border-radius:13px}.poster-play{width:42px;height:42px}}
+`;document.head.appendChild(style);}
 
-function setupFilters() {
-  document.querySelectorAll(".filter-btn").forEach(btn => btn.addEventListener("click", function(){
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    this.classList.add("active"); currentFilter = this.dataset.filter || "all"; renderTV();
-  }));
-  document.getElementById("searchInput")?.addEventListener("input", function(){ currentSearch=this.value; renderTV(); });
-  document.getElementById("tvSearchForm")?.addEventListener("submit", e=>e.preventDefault());
-  document.getElementById("sortSelect")?.addEventListener("change", function(){ currentSort=this.value; renderTV(); });
-}
+let watchlist=JSON.parse(localStorage.getItem("cutsceneWatchlist"))||[];function saveWatchlist(){localStorage.setItem("cutsceneWatchlist",JSON.stringify(watchlist));}function isInWatchlist(id,type="tv"){return watchlist.some(item=>item.id===id&&(item.type||"tv")===type);}
 
-let watchlist = JSON.parse(localStorage.getItem("cutsceneWatchlist")) || [];
-function saveWatchlist(){ localStorage.setItem("cutsceneWatchlist", JSON.stringify(watchlist)); }
-function isInWatchlist(id,type="tv"){ return watchlist.some(item=>item.id===id && (item.type||"tv")===type); }
+function openDetailModal(card){const id=Number(card.dataset.id),title=card.dataset.title,type=card.dataset.type||"tv";document.getElementById("modalTitle").textContent="Details";document.getElementById("modalTitleText").textContent=title;document.getElementById("modalYear").textContent=card.dataset.year;document.getElementById("modalRating").textContent=card.dataset.rating;document.getElementById("modalImage").src=card.dataset.image;document.getElementById("modalDescription").textContent=card.dataset.description;const imdbContainer=document.getElementById("modalImdbContainer"),imdbLink=document.getElementById("modalImdbLink");if(card.dataset.imdblink){imdbLink.href=card.dataset.imdblink;imdbContainer.classList.remove("d-none");}else imdbContainer.classList.add("d-none");const btn=document.getElementById("modalAddWatchlist"),status=document.getElementById("modalWatchlistStatus"),saved=isInWatchlist(id,type);btn.textContent=saved?"Remove from Watchlist":"+ Add to Watchlist";status.classList.toggle("d-none",!saved);btn.dataset.id=id;btn.dataset.title=title;btn.dataset.year=card.dataset.year;btn.dataset.rating=card.dataset.rating;btn.dataset.image=card.dataset.image;btn.dataset.description=card.dataset.description;btn.dataset.type=type;bootstrap.Modal.getOrCreateInstance(document.getElementById("detailModal")).show();}
 
-function openDetailModal(card){
-  const id=Number(card.dataset.id), title=card.dataset.title, type=card.dataset.type||"tv";
-  document.getElementById("modalTitle").textContent="Details";
-  document.getElementById("modalTitleText").textContent=title;
-  document.getElementById("modalYear").textContent=card.dataset.year;
-  document.getElementById("modalRating").textContent=card.dataset.rating;
-  document.getElementById("modalImage").src=card.dataset.image;
-  document.getElementById("modalDescription").textContent=card.dataset.description;
-  const imdbContainer=document.getElementById("modalImdbContainer"), imdbLink=document.getElementById("modalImdbLink");
-  if(card.dataset.imdblink){imdbLink.href=card.dataset.imdblink; imdbContainer.classList.remove("d-none");} else imdbContainer.classList.add("d-none");
-  const btn=document.getElementById("modalAddWatchlist"), status=document.getElementById("modalWatchlistStatus"), saved=isInWatchlist(id,type);
-  btn.textContent=saved?"Remove from Watchlist":"+ Add to Watchlist"; status.classList.toggle("d-none",!saved);
-  btn.dataset.id=id; btn.dataset.title=title; btn.dataset.year=card.dataset.year; btn.dataset.rating=card.dataset.rating; btn.dataset.image=card.dataset.image; btn.dataset.description=card.dataset.description; btn.dataset.type=type;
-  bootstrap.Modal.getOrCreateInstance(document.getElementById("detailModal")).show();
-}
+document.addEventListener("click",function(e){const btn=e.target.closest("#modalAddWatchlist");if(btn){const id=Number(btn.dataset.id),type=btn.dataset.type||"tv",index=watchlist.findIndex(item=>item.id===id&&(item.type||"tv")===type);if(index>=0){watchlist.splice(index,1);btn.textContent="+ Add to Watchlist";document.getElementById("modalWatchlistStatus").classList.add("d-none");}else{watchlist.push({id,title:btn.dataset.title,year:btn.dataset.year,rating:btn.dataset.rating,image:btn.dataset.image,description:btn.dataset.description,type,dateAdded:Date.now()});btn.textContent="Remove from Watchlist";document.getElementById("modalWatchlistStatus").classList.remove("d-none");}saveWatchlist();return;}const card=e.target.closest(".tv-shows-careds");if(card)openDetailModal(card);});
 
-document.addEventListener("click",function(e){
-  const btn=e.target.closest("#modalAddWatchlist");
-  if(btn){const id=Number(btn.dataset.id),type=btn.dataset.type||"tv",index=watchlist.findIndex(item=>item.id===id&&(item.type||"tv")===type); if(index>=0){watchlist.splice(index,1);btn.textContent="+ Add to Watchlist";document.getElementById("modalWatchlistStatus").classList.add("d-none");}else{watchlist.push({id,title:btn.dataset.title,year:btn.dataset.year,rating:btn.dataset.rating,image:btn.dataset.image,description:btn.dataset.description,type,dateAdded:Date.now()});btn.textContent="Remove from Watchlist";document.getElementById("modalWatchlistStatus").classList.remove("d-none");}saveWatchlist();return;}
-  const card=e.target.closest(".tv-shows-careds"); if(card) openDetailModal(card);
-});
-
-document.addEventListener("DOMContentLoaded",()=>{loadTV();setupFilters();});
+document.addEventListener("DOMContentLoaded",()=>{injectTVStyles();loadTV();setupFilters();});
