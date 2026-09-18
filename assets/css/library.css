@@ -1,6 +1,5 @@
 /* ==========================================
    Library / Watchlist Page Styles
-   (relies on design tokens + global resets from base.css)
    ========================================== */
 
 /* ---- Navbar ---- */
@@ -12,6 +11,7 @@
 .navbar a:hover {
     color: var(--color-accent) !important;
 }
+
 
 /* ---- Page Layout ---- */
 .watchlist-page {
@@ -45,6 +45,7 @@
     margin-left: 6px;
 }
 
+
 /* ---- Sort Controls ---- */
 .sort-container {
     display: flex;
@@ -52,6 +53,13 @@
     gap: 10px;
     color: var(--color-text-muted);
     font-size: 14px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.sort-container label {
+    white-space: nowrap;
+    flex: 0 0 auto;
 }
 
 .sort-container select {
@@ -59,9 +67,16 @@
     color: var(--color-text);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
+
+    width: 220px;
+    min-width: 220px;
+    flex: 0 0 220px;
+
     padding: 8px 14px;
+
     font-size: 14px;
     cursor: pointer;
+
     transition: var(--transition-base);
 }
 
@@ -71,17 +86,22 @@
     outline: none;
 }
 
-/* ---- Card Grid (Bootstrap row override) ---- */
+
+/* ---- Card Grid ---- */
 .watchlist-page .row {
     --bs-gutter-y: 1.5rem;
 }
 
-/* ---- Card Styles (Movies & TV Shows) ---- */
+
+/* ---- Card Styles ---- */
 .movies-careds,
 .tv-shows-careds {
     cursor: pointer;
+
     opacity: 0;
+
     transform: translateY(25px);
+
     animation: cardReveal 0.7s ease forwards;
 }
 
@@ -92,45 +112,73 @@
     }
 }
 
+
+/* ---- Posters ---- */
 .movies-postar,
 .tv-shows-postar {
     position: relative;
+
     width: 100%;
+
     aspect-ratio: 2 / 3;
+
     overflow: hidden;
+
     border-radius: var(--radius-md);
+
     background-color: var(--color-bg-card);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
 .movies-postar img,
 .tv-shows-postar img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     display: block;
-    transition: transform 0.6s ease, filter 0.6s ease;
+
+    transition:
+        transform 0.6s ease,
+        filter 0.6s ease;
 }
 
 .movies-postar::after,
 .tv-shows-postar::after {
     content: "";
+
     position: absolute;
+
     inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent 55%);
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.75),
+            transparent 55%
+        );
+
     opacity: 0;
+
     transition: opacity 0.4s ease;
 }
 
 .movies-careds:hover .movies-postar,
 .tv-shows-careds:hover .tv-shows-postar {
     transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.45);
 }
 
 .movies-careds:hover .movies-postar img,
 .tv-shows-careds:hover .tv-shows-postar img {
     transform: scale(1.08);
+
     filter: brightness(0.75);
 }
 
@@ -139,52 +187,80 @@
     opacity: 1;
 }
 
+
 /* ---- Rating Badge ---- */
 .movies-rating,
 .tv-shows-rating {
     position: absolute;
+
     top: 8px;
     left: 8px;
+
     z-index: 2;
+
     background-color: var(--color-bg-icon);
+
     color: var(--color-text);
+
     border-radius: 5px;
+
     padding: 4px 8px;
+
     font-weight: bold;
     font-size: 13px;
+
     border: 1px solid var(--color-border-soft);
-    transition: transform 0.4s ease, background-color 0.4s ease;
+
+    transition:
+        transform 0.4s ease,
+        background-color 0.4s ease;
 }
 
 .movies-careds:hover .movies-rating,
 .tv-shows-careds:hover .tv-shows-rating {
-    transform: translateY(-3px) scale(1.05);
+    transform:
+        translateY(-3px)
+        scale(1.05);
+
     background-color: var(--color-accent);
 }
+
 
 /* ---- Card Typography ---- */
 .movies-careds h4,
 .tv-shows-careds h4 {
     color: var(--color-text);
+
     font-size: 14px;
+
     margin: 8px 0 2px;
-    transition: transform 0.4s ease, color 0.4s ease;
+
+    transition:
+        transform 0.4s ease,
+        color 0.4s ease;
+
     white-space: nowrap;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
 .movies-careds:hover h4,
 .tv-shows-careds:hover h4 {
     transform: translateX(4px);
+
     color: var(--color-accent);
 }
 
 .movies-careds p,
 .tv-shows-careds p {
     color: var(--color-text-subtle);
+
     font-size: 12px;
+
     margin: 0;
+
     transition: transform 0.4s ease;
 }
 
@@ -193,13 +269,19 @@
     transform: translateX(4px);
 }
 
-/* ---- Empty State (shown when watchlist has no titles) ---- */
+
+/* ---- Empty State ---- */
 .watchlist-empty {
     display: none;
+
     grid-column: 1 / -1;
+
     color: var(--color-text-subtle);
+
     text-align: center;
+
     padding: 60px 20px;
+
     font-size: 15px;
 }
 
@@ -207,8 +289,13 @@
     display: block;
 }
 
-/* ---- Responsive ---- */
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
 @media (max-width: 991.98px) {
+
     .watchlist-page {
         padding: 30px 20px 50px;
     }
@@ -224,7 +311,9 @@
     }
 }
 
+
 @media (max-width: 575.98px) {
+
     .watchlist-page {
         padding: 20px 12px 40px;
     }
@@ -234,20 +323,25 @@
     }
 
     .sort-container {
-        flex-wrap: wrap;
+        width: 100%;
+        flex-wrap: nowrap;
         gap: 6px;
     }
 
     .sort-container select {
+        width: 190px;
+        min-width: 190px;
+        flex: 0 0 190px;
+
         padding: 6px 10px;
+
         font-size: 13px;
-        flex: 1;
-        min-width: 120px;
     }
 
     .movies-postar,
     .tv-shows-postar {
         height: 200px;
+        aspect-ratio: auto;
     }
 
     .movies-rating,
@@ -267,7 +361,9 @@
     }
 }
 
+
 @media (max-width: 400px) {
+
     .movies-postar,
     .tv-shows-postar {
         height: 160px;
