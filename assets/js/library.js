@@ -2,23 +2,25 @@ let watchlist = JSON.parse(localStorage.getItem("cutsceneWatchlist") || "[]");
 let catalog = [];
 let currentSort = "date";
 let currentSearch = "";
-let currentType = "all";  
+let currentType = "all";
 let currentGenre = "all";
 let currentLanguage = "all";
 
-const grid = document.getElementById("watchlistGrid");
-const movieCount = document.getElementById("movieCount");
-const sortSelect = document.getElementById("sortSelect");
-const librarySearch = document.getElementById("librarySearch");
-const librarySearchForm = document.getElementById("librarySearchForm");
+const $ = id => document.getElementById(id);
+const grid = $("watchlistGrid");
+const movieCount = $("movieCount");
+const sortSelect = $("sortSelect");
+const librarySearch = $("librarySearch");
+const librarySearchForm = $("librarySearchForm");
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]));
 }
 
 function fallbackPoster(title) {
-  const safe = String(title).replace(/[<>&\"']/g, "");
-  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750"><rect width="500" height="750" fill="#20232c"/><circle cx="250" cy="280" r="74" fill="#ef233c"/><path d="M230 245l70 35-70 35z" fill="white"/><text x="250" y="420" fill="white" font-size="28" text-anchor="middle" font-family="Arial">CUTSCENE</text><text x="250" y="465" fill="#a8adb8" font-size="22" text-anchor="middle" font-family="Arial">${safe}</text></svg>`);
+  const safe = String(title || "Cutscene").replace(/[<>&\"']/g, "");
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750"><rect width="500" height="750" fill="#20232c"/><circle cx="250" cy="280" r="74" fill="#ef233c"/><path d="M230 245l70 35-70 35z" fill="white"/><text x="250" y="420" fill="white" font-size="28" text-anchor="middle" font-family="Arial">CUTSCENE</text><text x="250" y="465" fill="#a8adb8" font-size="22" text-anchor="middle" font-family="Arial">${safe}</text></svg>`;
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 }
 
 function saveWatchlist() { localStorage.setItem("cutsceneWatchlist", JSON.stringify(watchlist)); }
@@ -39,9 +41,9 @@ function metaFor(item) {
 
 function getItems() {
   const query = currentSearch.trim().toLowerCase();
-  let items = watchlist.map(metaFor).filter(item => {
+  const items = watchlist.map(metaFor).filter(item => {
     const typeMatch = currentType === "all" || item.type === currentType;
-    const genreMatch = currentGenre === "all" || item.genre.map(g => String(g).toLowerCase()).includes(currentGenre);
+    const genreMatch = currentGenre === "all" || (item.genre || []).map(g => String(g).toLowerCase()).includes(currentGenre);
     const languageMatch = currentLanguage === "all" || item.language === currentLanguage;
     const searchMatch = !query || String(item.title || "").toLowerCase().includes(query);
     return typeMatch && genreMatch && languageMatch && searchMatch;
@@ -66,59 +68,60 @@ function renderWatchlist() {
   updateCount(items.length);
 
   if (!items.length) {
-    grid.innerHTML = `<div class="col-12 text-center py-5 library-empty"><h4>${currentSearch || currentType !== "all" || currentGenre !== "all" || currentLanguage !== "all" ? "No titles found" : "Your watchlist is empty"}</h4><p>Try another filter or add a title from Movies or TV Shows.</p></div>`;
+    const filtered = currentSearch || currentType !== "all" || currentGenre !== "all" || currentLanguage !== "all";
+    grid.innerHTML = `<div class="col-12 text-center py-5 library-empty"><h4>${filtered ? "No titles found" : "Your watchlist is empty"}</h4><p>Try another filter or add a title from Movies or TV Shows.</p></div>`;
     return;
   }
 
   items.forEach(item => {
     const col = document.createElement("div");
     col.className = "col-6 col-md-4 col-lg-3 col-xl-3";
-    const cardClass = item.type === "tv" ? "tv-shows-careds" : "movies-careds";
-    const posterClass = item.type === "tv" ? "tv-shows-postar" : "movies-postar";
-    const ratingClass = item.type === "tv" ? "tv-shows-rating" : "movies-rating";
-    const image = escapeHtml(item.image);
+    const isTV = item.type === "tv";
+    const cardClass = isTV ? "tv-shows-careds" : "movies-careds";
+    const posterClass = isTV ? "tv-shows-postar" : "movies-postar";
+    const ratingClass = isTV ? "tv-shows-rating" : "movies-rating";
+    const image = escapeHtml(item.image || fallbackPoster(item.title));
     const language = item.language === "AR" ? "AR" : "E";
 
-    col.innerHTML = `<article class="${cardClass} watchlist-item" data-id="${item.id}" data-type="${item.type}" data-title="${escapeHtml(item.title)}" data-year="${item.year || ""}" data-rating="${item.rating || 0}" data-image="${image}" data-description="${escapeHtml(item.description || "")}" data-language="${item.language}"><div class="${posterClass}"><img src="${image}" alt="${escapeHtml(item.title)} poster" loading="lazy" onerror="this.onerror=null;this.src='${fallbackPoster(item.title)}'"><span class="${ratingClass}"><i class="fa-solid fa-star"></i> ${Number(item.rating || 0).toFixed(1)}</span><span class="language-badge-card ${item.language === "AR" ? "ar-badge" : "en-badge"}">${language}</span><button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 delete-btn" data-id="${item.id}" data-type="${item.type}" title="Remove from watchlist" aria-label="Remove ${escapeHtml(item.title)}">×</button></div><h4>${escapeHtml(item.title)}</h4><p>${item.year || ""} <span>•</span> ${item.type === "tv" ? "Series" : "Movie"}</p></article>`;
+    col.innerHTML = `<article class="${cardClass} watchlist-item" data-id="${item.id}" data-type="${item.type}" data-title="${escapeHtml(item.title)}" data-year="${item.year || ""}" data-rating="${item.rating || 0}" data-image="${image}" data-description="${escapeHtml(item.description || "")}"><div class="${posterClass}"><img src="${image}" alt="${escapeHtml(item.title)} poster" loading="lazy" onerror="this.onerror=null;this.src='${fallbackPoster(item.title)}'"><span class="${ratingClass}"><i class="fa-solid fa-star"></i> ${Number(item.rating || 0).toFixed(1)}</span><span class="language-badge-card ${item.language === "AR" ? "ar-badge" : "en-badge"}">${language}</span><button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 delete-btn" data-id="${item.id}" data-type="${item.type}" title="Remove from watchlist" aria-label="Remove ${escapeHtml(item.title)}">×</button></div><h4>${escapeHtml(item.title)}</h4><p>${item.year || ""} <span>•</span> ${isTV ? "Series" : "Movie"}</p></article>`;
     grid.appendChild(col);
   });
 
-  document.querySelectorAll(".delete-btn").forEach(btn => btn.addEventListener("click", e => {
+  grid.querySelectorAll(".delete-btn").forEach(btn => btn.addEventListener("click", e => {
     e.stopPropagation();
     const id = Number(btn.dataset.id);
-    const type = btn.dataset.type;
+    const type = btn.dataset.type || "movie";
     watchlist = watchlist.filter(item => !(Number(item.id) === id && (item.type || "movie") === type));
     saveWatchlist();
     renderWatchlist();
   }));
 
-  document.querySelectorAll(".watchlist-item").forEach(card => card.addEventListener("click", () => openDetailModal(card)));
+  grid.querySelectorAll(".watchlist-item").forEach(card => card.addEventListener("click", () => openDetailModal(card)));
 }
 
 function openDetailModal(card) {
-  const title = card.dataset.title;
-  document.getElementById("modalTitleText").textContent = title;
-  document.getElementById("modalYear").textContent = card.dataset.year;
-  document.getElementById("modalRating").textContent = Number(card.dataset.rating || 0).toFixed(1) + "/10";
-  document.getElementById("modalDescription").textContent = card.dataset.description || "No description available.";
+  $("modalTitleText").textContent = card.dataset.title;
+  $("modalYear").textContent = card.dataset.year;
+  $("modalRating").textContent = Number(card.dataset.rating || 0).toFixed(1) + "/10";
+  $("modalDescription").textContent = card.dataset.description || "No description available.";
 
-  const image = document.getElementById("modalImage");
-  image.src = card.dataset.image || fallbackPoster(title);
-  image.alt = title + " poster";
-  image.onerror = () => { image.onerror = null; image.src = fallbackPoster(title); };
+  const image = $("modalImage");
+  image.src = card.dataset.image || fallbackPoster(card.dataset.title);
+  image.alt = card.dataset.title + " poster";
+  image.onerror = () => { image.onerror = null; image.src = fallbackPoster(card.dataset.title); };
 
-  const imdb = document.getElementById("modalImdbContainer");
-  const link = document.getElementById("modalImdbLink");
-  link.href = `https://www.imdb.com/find/?q=${encodeURIComponent(title + " " + card.dataset.year)}`;
+  const imdb = $("modalImdbContainer");
+  const link = $("modalImdbLink");
+  link.href = `https://www.imdb.com/find/?q=${encodeURIComponent(card.dataset.title + " " + card.dataset.year)}`;
   imdb.classList.remove("d-none");
 
-  const button = document.getElementById("modalAddWatchlist");
-  const status = document.getElementById("modalWatchlistStatus");
+  const button = $("modalAddWatchlist");
+  const status = $("modalWatchlistStatus");
   button.textContent = "Remove from Watchlist";
   status.classList.remove("d-none");
   button.dataset.id = card.dataset.id;
   button.dataset.type = card.dataset.type;
-  bootstrap.Modal.getOrCreateInstance(document.getElementById("detailModal")).show();
+  bootstrap.Modal.getOrCreateInstance($("detailModal")).show();
 }
 
 async function loadCatalog() {
@@ -131,7 +134,8 @@ async function loadCatalog() {
 
   try {
     const responses = await Promise.all(sources.map(([url]) => fetch(url + "?t=" + Date.now())));
-    const dataSets = await Promise.all(responses.map(r => r.json()));
+    if (responses.some(response => !response.ok)) throw new Error("Catalog request failed");
+    const dataSets = await Promise.all(responses.map(response => response.json()));
     catalog = [];
     dataSets.forEach((data, index) => {
       const [, type, defaultLanguage] = sources[index];
@@ -143,97 +147,47 @@ async function loadCatalog() {
   renderWatchlist();
 }
 
-sortSelect?.addEventListener("change", function(){ currentSort = this.value; renderWatchlist(); });
-librarySearch?.addEventListener("input", function(){ currentSearch = this.value; renderWatchlist(); });
-librarySearchForm?.addEventListener("submit", e => e.preventDefault());
+function setupControls() {
+  sortSelect?.addEventListener("change", e => { currentSort = e.target.value; renderWatchlist(); });
+  librarySearch?.addEventListener("input", e => { currentSearch = e.target.value; renderWatchlist(); });
+  librarySearchForm?.addEventListener("submit", e => e.preventDefault());
 
-// Categories
-document
-  .getElementById("genreSelect")
-  ?.addEventListener("change", function () {
-
-    currentGenre = this.value || "all";
-
+  $("genreSelect")?.addEventListener("change", e => {
+    currentGenre = e.target.value || "all";
     renderWatchlist();
-
   });
 
-
-// Movies / TV Shows
-document
-  .querySelectorAll("#libraryTypeFilter .filter-btn")
-  .forEach(btn => {
-
-    btn.addEventListener("click", function () {
-
-      document
-        .querySelectorAll("#libraryTypeFilter .filter-btn")
-        .forEach(b =>
-          b.classList.remove("active")
-        );
-
-      this.classList.add("active");
-
-      currentType =
-        this.dataset.type || "all";
-
+  document.querySelectorAll("#libraryTypeFilter .filter-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("#libraryTypeFilter .filter-btn").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
+      currentType = button.dataset.type || "all";
       renderWatchlist();
-
     });
-
   });
 
-
-// Language
-document
-  .querySelectorAll("#libraryLanguageFilter .language-btn")
-  .forEach(btn => {
-
-    btn.addEventListener("click", function () {
-
-      document
-        .querySelectorAll(
-          "#libraryLanguageFilter .language-btn"
-        )
-        .forEach(b =>
-          b.classList.remove("active")
-        );
-
-      this.classList.add("active");
-
-      currentLanguage =
-        this.dataset.language || "all";
-
+  document.querySelectorAll("#libraryLanguageFilter .language-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("#libraryLanguageFilter .language-btn").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
+      currentLanguage = button.dataset.language || "all";
       renderWatchlist();
-
     });
-
   });
-}));
 
-document.querySelectorAll("#libraryTypeFilter .filter-btn").forEach(btn => btn.addEventListener("click", function(){
-  document.querySelectorAll("#libraryTypeFilter .filter-btn").forEach(b => b.classList.remove("active"));
-  this.classList.add("active");
-  currentType = this.dataset.type || "all";
-  renderWatchlist();
-}));
+  document.addEventListener("click", event => {
+    const button = event.target.closest("#modalAddWatchlist");
+    if (!button) return;
+    const id = Number(button.dataset.id);
+    const type = button.dataset.type || "movie";
+    watchlist = watchlist.filter(item => !(Number(item.id) === id && (item.type || "movie") === type));
+    saveWatchlist();
+    bootstrap.Modal.getInstance($("detailModal"))?.hide();
+    renderWatchlist();
+  });
+}
 
-document.querySelectorAll("#libraryLanguageFilter .language-btn").forEach(btn => btn.addEventListener("click", function(){
-  document.querySelectorAll("#libraryLanguageFilter .language-btn").forEach(b => b.classList.remove("active"));
-  this.classList.add("active");
-  currentLanguage = this.dataset.language || "all";
-  renderWatchlist();
-}));
-
-document.addEventListener("click", function(e){
-  const btn = e.target.closest("#modalAddWatchlist");
-  if (!btn) return;
-  const id = Number(btn.dataset.id);
-  const type = btn.dataset.type || "movie";
-  watchlist = watchlist.filter(item => !(Number(item.id) === id && (item.type || "movie") === type));
-  saveWatchlist();
-  bootstrap.Modal.getInstance(document.getElementById("detailModal"))?.hide();
-  renderWatchlist();
+document.addEventListener("DOMContentLoaded", () => {
+  setupControls();
+  loadCatalog();
 });
-
-document.addEventListener("DOMContentLoaded", loadCatalog);
