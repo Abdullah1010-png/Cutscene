@@ -1,0 +1,68 @@
+[
+  {
+    "id": 101,
+    "title": "تراب الماس",
+    "year": 2018,
+    "language": "AR",
+    "genre": ["Crime", "Thriller", "Drama"],
+    "rating": "8.2",
+    "image": "https://media.egypttelegraph.com/ArticleUpload/2025/12/3/40231328_85506866136_2826_044121.jpg",
+    "description": "فيلم جريمة وتشويق عن طه، الذي تنقلب حياته بعد جريمة غامضة ويبدأ في اكتشاف أسرار مظلمة عن ماضي والده.",
+    "imdblink": "https://www.imdb.com/title/tt7016342/"
+  },
+  {
+    "id": 102,
+    "title": "الفيل الأزرق",
+    "year": 2014,
+    "language": "AR",
+    "genre": ["Drama", "Thriller", "Mystery"],
+    "rating": "8.0",
+    "image": "https://artworks.thetvdb.com/banners/v4/movie/37220/posters/6597765a3f36a.jpg",
+    "description": "طبيب نفسي يعود للعمل في مستشفى العباسية ويجد نفسه أمام حالة غامضة تعيد فتح ملفات من ماضيه.",
+    "imdblink": "https://www.imdb.com/title/tt3460916/"
+  },
+  {
+    "id": 103,
+    "title": "كيرة والجن",
+    "year": 2022,
+    "language": "AR",
+    "genre": ["Action", "Drama", "History"],
+    "rating": "7.8",
+    "image": "https://www.vetogate.com/Upload/libfiles/77/2/841.jpg",
+    "description": "دراما تاريخية تدور أحداثها خلال ثورة 1919 وتتابع مقاومة الاحتلال من خلال شخصيات متباينة.",
+    "imdblink": "https://www.imdb.com/title/tt13379020/"
+  },
+  {
+    "id": 104,
+    "title": "إكس لارج",
+    "year": 2011,
+    "language": "AR",
+    "genre": ["Comedy", "Romance", "Drama"],
+    "rating": "7.1",
+    "image": "https://image.tmdb.org/t/p/w780/dBK3YVsY27F7VYWXdSrXqot947K.jpg",
+    "description": "كوميديا اجتماعية عن مجدي الذي يحاول التعامل مع حياته وعلاقاته بعد عودة حب قديم إلى حياته.",
+    "imdblink": "https://www.imdb.com/title/tt2071584/"
+  },
+  {
+    "id": 105,
+    "title": "ولاد رزق",
+    "year": 2015,
+    "language": "AR",
+    "genre": ["Action", "Crime", "Comedy"],
+    "rating": "7.4",
+    "image": "https://m.media-amazon.com/images/M/MV5BMTU0MTk1MDIxMV5BMl5BanBnXkFtZTgwNTMxNjUyNjE%40._V1_.jpg",
+    "description": "مجموعة من الإخوة يحاولون تنفيذ عملية أخيرة قبل ترك عالم الجريمة، لكن الأمور لا تسير كما خططوا.",
+    "imdblink": "https://www.imdb.com/title/tt4840206/"
+  },
+  {
+    "id": 106,
+    "title": "الجزيرة",
+    "year": 2007,
+    "language": "AR",
+    "genre": ["Action", "Drama", "Crime"],
+    "rating": "7.2",
+    "image": "https://images.justwatch.com/poster/337123984/s718/ljzyr-2007.jpg",
+    "description": "فيلم أكشن ودراما مصري عن منصور الذي يرث نفوذ والده في الصعيد ويجد نفسه في صراع مع الشرطة والخصوم.",
+    "imdblink": "https://www.imdb.com/title/tt1124035/"
+  }
+]
