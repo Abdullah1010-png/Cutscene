@@ -16,15 +16,29 @@
 
     <!-- استدعاء ملف تنسيقات Bootstrap 5 من الـ CDN مع تفعيل حماية SRI التشفيرية -->
     <link
+      rel="preload"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
+      as="style"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+      />
+    </noscript>
 
     <!-- ملف CSS المخصص للتعديل على التصميم الأساسي -->
-    <link rel="stylesheet" href="./assets/css/base.css" />
-    <link rel="stylesheet" href="./assets/css/home.css" />
+    <link rel="preload" href="./assets/css/base.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="preload" href="./assets/css/home.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+      <link rel="stylesheet" href="./assets/css/base.css" />
+      <link rel="stylesheet" href="./assets/css/home.css" />
+    </noscript>
   </head>
   <body>
     <!-- ==========================================
@@ -39,6 +53,7 @@
           <img
             src="assets/images/logo.png"
             alt="Cutscene Logo"
+            width="148"
             height="36"
             class="d-inline-block align-text-top"
           />
