@@ -31,48 +31,86 @@
         <div class="profile">
             <img src="https://i.pravatar.cc/100?img=12" alt="Profile">
         </div>
+
+        <button class="menu-btn" id="menuBtn">☰</button>
     </div>
 </nav>
 
-<main class="container">
-    <section class="hero">
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#" class="active">Library</a>
+    <a href="#">Movies</a>
+    <a href="#">TV Shows</a>
+</div>
+
+<main class="watchlist-page">
+    <div class="page-header">
         <div>
-            <p class="eyebrow">YOUR PERSONAL MOVIE LIBRARY</p>
-            <h1>My Watchlist</h1>
-            <p class="subtitle">Keep track of movies you want to watch.</p>
+            <h1>My Watchlist <span id="movieCount">(0 titles)</span></h1>
+            <p class="page-subtitle">Movies you want to watch later</p>
         </div>
-        <button class="add-btn" id="openAddModal">+ Add Movie</button>
-    </section>
 
-    <section class="toolbar">
-        <div class="watchlist-count" id="movieCount">0 movies</div>
-        <select id="sortSelect">
-            <option value="date">Recently Added</option>
-            <option value="rating">Highest Rated</option>
-            <option value="name">Name</option>
-            <option value="year">Year</option>
-        </select>
-    </section>
+        <div class="header-actions">
+            <button class="add-btn" id="addMovieBtn">+ Add Movie</button>
 
-    <section class="movie-grid" id="movieGrid"></section>
+            <div class="sort-container">
+                <span>Sort:</span>
+                <select id="sortSelect">
+                    <option value="date">Date Added</option>
+                    <option value="rating">Rating</option>
+                    <option value="title">Title</option>
+                    <option value="year">Year</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <section class="movies-grid" id="watchlistGrid"></section>
 </main>
 
-<div class="modal" id="addModal">
+<div class="modal" id="movieModal">
     <div class="modal-content">
-        <button class="close-btn" data-close="addModal">×</button>
+        <button class="close-btn" id="closeModal">×</button>
         <h2>Add Movie</h2>
+        <p class="modal-subtitle">Add a movie to your watchlist.</p>
+
         <form id="movieForm">
-            <input id="movieTitle" type="text" placeholder="Movie title" required>
-            <input id="movieYear" type="number" placeholder="Year" required>
-            <input id="movieRating" type="number" min="0" max="10" step="0.1" placeholder="Rating" required>
-            <input id="movieImage" type="url" placeholder="Poster image URL" required>
-            <button type="submit" class="submit-btn">Add Movie</button>
+            <label>
+                Movie Title
+                <input id="movieTitle" type="text" required>
+            </label>
+
+            <label>
+                Year
+                <input id="movieYear" type="number" min="1900" max="2100" required>
+            </label>
+
+            <label>
+                Rating
+                <input id="movieRating" type="number" min="0" max="10" step="0.1" required>
+            </label>
+
+            <label>
+                Poster URL
+                <input id="movieImage" type="url" placeholder="https://..." required>
+            </label>
+
+            <button class="save-btn" type="submit">Add Movie</button>
         </form>
     </div>
 </div>
 
 <div class="modal" id="detailsModal">
-    <div class="modal-content" id="detailsContent"></div>
+    <div class="modal-content details-content">
+        <button class="close-btn" id="closeDetails">×</button>
+
+        <img id="detailsImage" class="details-image" src="" alt="">
+
+        <div class="details-info">
+            <h2 id="detailsTitle"></h2>
+            <p id="detailsMeta"></p>
+            <p>This movie is saved in your personal watchlist.</p>
+        </div>
+    </div>
 </div>
 
 <script src="js/script.js"></script>
