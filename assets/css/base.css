@@ -62,14 +62,134 @@ a:hover { color: var(--color-accent); }
     opacity: .9;
 }
 
+/* ==========================================
+   SHARED CATALOG FILTERS
+   Movies / TV Shows / Library
+   ========================================== */
+.catalog-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.filter-control,
+.type-filter,
+.language-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.filter-control::-webkit-scrollbar,
+.type-filter::-webkit-scrollbar,
+.language-filter::-webkit-scrollbar { display: none; }
+
+.filter-control label,
+.type-filter .language-label,
+.language-filter .language-label {
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.filter-control select {
+    width: 220px;
+    min-width: 220px;
+    height: 48px;
+    background-color: var(--color-bg-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-pill);
+    padding: 8px 42px 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+
+.filter-control select:hover,
+.filter-control select:focus {
+    border-color: var(--color-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, .12);
+}
+
+.language-btn,
+.type-filter .filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 68px;
+    height: 40px;
+    padding: 6px 14px;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .2s ease;
+}
+
+.language-btn:hover,
+.language-btn.active,
+.type-filter .filter-btn:hover,
+.type-filter .filter-btn.active {
+    background-color: var(--color-accent) !important;
+    color: #fff !important;
+    border-color: var(--color-accent) !important;
+}
+
+.language-btn:hover,
+.type-filter .filter-btn:hover { transform: translateY(-1px); }
+
+.language-badge,
+.language-badge-card {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.language-badge {
+    min-width: 24px;
+    height: 20px;
+    padding: 0 6px;
+    margin-right: 2px;
+    border-radius: 6px;
+    font-size: 10px;
+}
+
+.ar-badge { background: #8b1e3f; color: #fff; }
+.en-badge { background: #2457a6; color: #fff; }
+
+.language-badge-card {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 4;
+    min-width: 31px;
+    height: 25px;
+    padding: 0 7px;
+    border-radius: 7px;
+    font-size: 11px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+    border: 1px solid rgba(255, 255, 255, .2);
+}
+
 .links-movies,
 .links-tv-shows,
-.library-filters,
-.language-filter { scrollbar-width: none; }
+.library-filters { scrollbar-width: none; }
 .links-movies::-webkit-scrollbar,
 .links-tv-shows::-webkit-scrollbar,
-.library-filters::-webkit-scrollbar,
-.language-filter::-webkit-scrollbar { display: none; }
+.library-filters::-webkit-scrollbar { display: none; }
 
 .movies-careds,
 .tv-shows-careds { min-width: 0; }
@@ -96,4 +216,7 @@ a:hover { color: var(--color-accent); }
 @media (max-width: 575.98px) {
     .catalog-section-title { margin-top: 0; }
     .sort-container { width: 100%; }
+    .filter-control { width: 100%; }
+    .filter-control select { flex: 1; width: auto; min-width: 0; }
+    .type-filter, .language-filter { width: 100%; padding-bottom: 4px; }
 }
