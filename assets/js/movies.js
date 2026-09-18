@@ -98,6 +98,15 @@ function setupFilters() {
   document.getElementById("searchInput")?.addEventListener("input", function () { currentSearch = this.value; renderMovies(); });
   document.getElementById("movieSearchForm")?.addEventListener("submit", e => e.preventDefault());
   document.getElementById("sortSelect")?.addEventListener("change", function () { currentSort = this.value; renderMovies(); });
+
+  // Accept searches coming from the shared navbar.
+  const params = new URLSearchParams(window.location.search);
+  const urlSearch = params.get("search");
+  if (urlSearch) {
+    currentSearch = urlSearch;
+    const input = document.getElementById("searchInput");
+    if (input) input.value = urlSearch;
+  }
 }
 
 let watchlist = JSON.parse(localStorage.getItem("cutsceneWatchlist")) || [];
