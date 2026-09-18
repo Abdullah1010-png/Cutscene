@@ -2,7 +2,7 @@ let watchlist = JSON.parse(localStorage.getItem("cutsceneWatchlist") || "[]");
 let catalog = [];
 let currentSort = "date";
 let currentSearch = "";
-let currentType = "all";
+let currentType = "all";  
 let currentGenre = "all";
 let currentLanguage = "all";
 
@@ -147,11 +147,68 @@ sortSelect?.addEventListener("change", function(){ currentSort = this.value; ren
 librarySearch?.addEventListener("input", function(){ currentSearch = this.value; renderWatchlist(); });
 librarySearchForm?.addEventListener("submit", e => e.preventDefault());
 
-document.querySelectorAll("#libraryGenreFilter .filter-btn").forEach(btn => btn.addEventListener("click", function(){
-  document.querySelectorAll("#libraryGenreFilter .filter-btn").forEach(b => b.classList.remove("active"));
-  this.classList.add("active");
-  currentGenre = this.dataset.filter || "all";
-  renderWatchlist();
+// Categories
+document
+  .getElementById("genreSelect")
+  ?.addEventListener("change", function () {
+
+    currentGenre = this.value || "all";
+
+    renderWatchlist();
+
+  });
+
+
+// Movies / TV Shows
+document
+  .querySelectorAll("#libraryTypeFilter .filter-btn")
+  .forEach(btn => {
+
+    btn.addEventListener("click", function () {
+
+      document
+        .querySelectorAll("#libraryTypeFilter .filter-btn")
+        .forEach(b =>
+          b.classList.remove("active")
+        );
+
+      this.classList.add("active");
+
+      currentType =
+        this.dataset.type || "all";
+
+      renderWatchlist();
+
+    });
+
+  });
+
+
+// Language
+document
+  .querySelectorAll("#libraryLanguageFilter .language-btn")
+  .forEach(btn => {
+
+    btn.addEventListener("click", function () {
+
+      document
+        .querySelectorAll(
+          "#libraryLanguageFilter .language-btn"
+        )
+        .forEach(b =>
+          b.classList.remove("active")
+        );
+
+      this.classList.add("active");
+
+      currentLanguage =
+        this.dataset.language || "all";
+
+      renderWatchlist();
+
+    });
+
+  });
 }));
 
 document.querySelectorAll("#libraryTypeFilter .filter-btn").forEach(btn => btn.addEventListener("click", function(){
