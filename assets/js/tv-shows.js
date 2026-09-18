@@ -3,6 +3,7 @@ const ARABIC_TV_URL = "../assets/data/arabic-tv-shows.json?t=" + Date.now();
 
 let tvData = [];
 let currentGenre = "all";
+let currentType = "all";
 let currentLanguage = "all";
 let currentSearch = "";
 let currentSort = "default";
@@ -56,10 +57,11 @@ function renderTV() {
 
   const query = currentSearch.trim().toLowerCase();
   let items = tvData.filter(show => {
+    const typeMatch = currentType === "all" || currentType === "tv";
     const genreMatch = currentGenre === "all" || show.genre.includes(currentGenre);
     const languageMatch = currentLanguage === "all" || show.language === currentLanguage;
     const searchMatch = !query || show.title.toLowerCase().includes(query);
-    return genreMatch && languageMatch && searchMatch;
+    return typeMatch && genreMatch && languageMatch && searchMatch;
   });
 
   items = sortItems(items);
@@ -135,88 +137,53 @@ function openDetails(show) {
 }
 
 function setupControls() {
-
-  // Categories
   $("genreSelect")?.addEventListener("change", e => {
-
     currentGenre = e.target.value || "all";
-
     renderTV();
-
   });
 
-  // Language
-  document
-    .querySelectorAll("#languageFilter .language-btn")
-    .forEach(button => {
-
-      button.addEventListener("click", () => {
-
-        document
-          .querySelectorAll("#languageFilter .language-btn")
-          .forEach(b => b.classList.remove("active"));
-
-        button.classList.add("active");
-
-        currentLanguage =
-          button.dataset.language || "all";
-
-        renderTV();
-
-      });
-
+  document.querySelectorAll("#typeFilter .filter-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("#typeFilter .filter-btn").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
+      currentType = button.dataset.type || "all";
+      renderTV();
     });
+  });
 
-  // Search
+  document.querySelectorAll("#languageFilter .language-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("#languageFilter .language-btn").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
+      currentLanguage = button.dataset.language || "all";
+      renderTV();
+    });
+  });
+
   $("searchInput")?.addEventListener("input", e => {
-
     currentSearch = e.target.value;
-
     renderTV();
-
   });
 
-  $("tvSearchForm")?.addEventListener("submit", e => {
-    e.preventDefault();
-  });
+  $("tvSearchForm")?.addEventListener("submit", e => e.preventDefault());
 
-  // Sort
   $("sortSelect")?.addEventListener("change", e => {
-
     currentSort = e.target.value;
-
     renderTV();
-
   });
 
-  // Watchlist
   document.addEventListener("click", event => {
-
-    const button =
-      event.target.closest("#modalAddWatchlist");
-
+    const button = event.target.closest("#modalAddWatchlist");
     if (!button) return;
 
     const id = Number(button.dataset.id);
-
-    const index = watchlist.findIndex(
-      item =>
-        Number(item.id) === id &&
-        (item.type || "movie") === "tv"
-    );
+    const index = watchlist.findIndex(item => Number(item.id) === id && (item.type || "movie") === "tv");
 
     if (index >= 0) {
-
       watchlist.splice(index, 1);
-
-      button.textContent =
-        "+ Add to Watchlist";
-
-      $("modalWatchlistStatus")
-        ?.classList.add("d-none");
-
+      button.textContent = "+ Add to Watchlist";
+      $("modalWatchlistStatus")?.classList.add("d-none");
     } else {
-
       watchlist.push({
         id,
         type: "tv",
@@ -228,16 +195,11 @@ function setupControls() {
         language: button.dataset.language,
         dateAdded: Date.now()
       });
-
-      button.textContent =
-        "Remove from Watchlist";
-
-      $("modalWatchlistStatus")
-        ?.classList.remove("d-none");
+      button.textContent = "Remove from Watchlist";
+      $("modalWatchlistStatus")?.classList.remove("d-none");
     }
 
     saveWatchlist();
-
   });
 }
 
