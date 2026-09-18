@@ -53,65 +53,31 @@
           </div>
         </div>
 
-      <div class="catalog-controls mb-4">
+        <div class="catalog-controls mb-4">
+          <div class="filter-control">
+            <label for="genreSelect">Categories:</label>
+            <select id="genreSelect" class="form-select rounded-pill">
+              <option value="all">All Categories</option>
+              <option value="action">Action</option>
+              <option value="drama">Drama</option>
+              <option value="comedy">Comedy</option>
+              <option value="adventure">Adventure</option>
+              <option value="sci-fi">Sci-Fi</option>
+              <option value="thriller">Thriller</option>
+              <option value="crime">Crime</option>
+              <option value="fantasy">Fantasy</option>
+              <option value="romance">Romance</option>
+              <option value="animation">Animation</option>
+              <option value="anime">Anime</option>
+            </select>
+          </div>
 
-  <!-- Categories -->
-  <div class="filter-control">
-    <label for="genreSelect">Categories:</label>
-
-    <select id="genreSelect" class="form-select rounded-pill">
-      <option value="all">All Categories</option>
-      <option value="action">Action</option>
-      <option value="drama">Drama</option>
-      <option value="comedy">Comedy</option>
-      <option value="adventure">Adventure</option>
-      <option value="sci-fi">Sci-Fi</option>
-      <option value="thriller">Thriller</option>
-      <option value="crime">Crime</option>
-      <option value="fantasy">Fantasy</option>
-      <option value="romance">Romance</option>
-      <option value="animation">Animation</option>
-      <option value="anime">Anime</option>
-    </select>
-  </div>
-
-  <!-- Language -->
-  <div class="language-filter" id="languageFilter">
-
-    <span class="language-label">Language:</span>
-
-    <button
-      type="button"
-      class="language-btn active"
-      data-language="all">
-      All
-    </button>
-
-    <button
-      type="button"
-      class="language-btn"
-      data-language="AR">
-      <span class="language-badge ar-badge">AR</span>
-      عربي
-    </button>
-
-    <button
-      type="button"
-      class="language-btn"
-      data-language="EN">
-      <span class="language-badge en-badge">E</span>
-      English
-    </button>
-
-  </div>
-
-</div>
-
-        <div class="language-filter d-flex align-items-center gap-2 flex-nowrap overflow-auto mb-4" id="languageFilter">
-          <span class="language-label">Language:</span>
-          <button type="button" class="language-btn active" data-language="all">All</button>
-          <button type="button" class="language-btn" data-language="AR"><span class="language-badge ar-badge">AR</span> عربي</button>
-          <button type="button" class="language-btn" data-language="EN"><span class="language-badge en-badge">E</span> English</button>
+          <div class="language-filter" id="languageFilter">
+            <span class="language-label">Language:</span>
+            <button type="button" class="language-btn active" data-language="all">All</button>
+            <button type="button" class="language-btn" data-language="AR"><span class="language-badge ar-badge">AR</span> عربي</button>
+            <button type="button" class="language-btn" data-language="EN"><span class="language-badge en-badge">E</span> English</button>
+          </div>
         </div>
 
         <div class="row g-4" id="moviesContainer"></div>
