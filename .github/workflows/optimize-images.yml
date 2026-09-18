@@ -38,9 +38,10 @@ jobs:
             fi
           done
 
-          find assets/images/series -type f -name '*.webp' ! -name '*-160.webp' ! -name '*-200.webp' -print0 |
+          find assets/images/series -type f -name '*.webp' ! -name '*-140.webp' ! -name '*-160.webp' ! -name '*-200.webp' -print0 |
           while IFS= read -r -d '' file; do
             base="${file%.webp}"
+            [ -f "${base}-140.webp" ] || cwebp -quiet -q 65 -m 6 -mt -resize 140 0 "$file" -o "${base}-140.webp"
             [ -f "${base}-160.webp" ] || cwebp -quiet -q 65 -m 6 -mt -resize 160 0 "$file" -o "${base}-160.webp"
             [ -f "${base}-200.webp" ] || cwebp -quiet -q 65 -m 6 -mt -resize 200 0 "$file" -o "${base}-200.webp"
           done
