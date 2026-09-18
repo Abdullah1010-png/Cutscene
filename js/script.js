@@ -5,7 +5,7 @@ const defaultMovies = [
         year: 2014,
         rating: 8.7,
         dateAdded: 4,
-        image: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+        image: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.webp"
     },
     {
         id: 2,
@@ -13,7 +13,7 @@ const defaultMovies = [
         year: 2026,
         rating: 8.8,
         dateAdded: 3,
-        image: "https://image.tmdb.org/t/p/w500/9JCQtDCSpPR2ld55yNlEg1VwcQo.jpg"
+        image: "https://image.tmdb.org/t/p/w500/9JCQtDCSpPR2ld55yNlEg1VwcQo.webp"
     },
     {
         id: 3,
@@ -21,7 +21,7 @@ const defaultMovies = [
         year: 2014,
         rating: 6.4,
         dateAdded: 2,
-        image: "https://image.tmdb.org/t/p/w500/kOaszlaotCGOu9BhFeeATnGkVMV.jpg"
+        image: "https://image.tmdb.org/t/p/w500/kOaszlaotCGOu9BhFeeATnGkVMV.webp"
     },
     {
         id: 4,
@@ -29,7 +29,7 @@ const defaultMovies = [
         year: 2009,
         rating: 6.7,
         dateAdded: 1,
-        image: "https://image.tmdb.org/t/p/w500/zvjQPVttJWaCSbzMijyc2x2MLr4.jpg"
+        image: "https://image.tmdb.org/t/p/w500/zvjQPVttJWaCSbzMijyc2x2MLr4.webp"
     },
     {
         id: 5,

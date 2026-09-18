@@ -16,7 +16,7 @@ const extraCarMovies = [
     language: "EN",
     genre: ["Action", "Crime", "Drama"],
     rating: "6.4",
-    image: "https://image.tmdb.org/t/p/w500/kOaszlaotCGOu9BhFeeATnGkVMV.jpg",
+    image: "https://image.tmdb.org/t/p/w500/kOaszlaotCGOu9BhFeeATnGkVMV.webp",
     description: "A street racer is framed for a crime he did not commit and sets out on a cross-country race for revenge.",
     imdblink: "https://www.imdb.com/title/tt2369135/"
   },
@@ -27,7 +27,7 @@ const extraCarMovies = [
     language: "EN",
     genre: ["Action", "Crime", "Thriller"],
     rating: "6.6",
-    image: "https://image.tmdb.org/t/p/w500/zvjQPVttJWaCSbzMijyc2x2MLr4.jpg",
+    image: "https://image.tmdb.org/t/p/w500/zvjQPVttJWaCSbzMijyc2x2MLr4.webp",
     description: "The Fast & Furious crew reunites as old rivalries and a dangerous criminal investigation bring them back together.",
     imdblink: "https://www.imdb.com/title/tt1013752/"
   },
@@ -38,7 +38,7 @@ const extraCarMovies = [
     language: "EN",
     genre: ["Action", "Crime", "Drama"],
     rating: "6.0",
-    image: "https://pixeldemonmg.co.uk/cdn/shop/files/fandf_11.jpg?v=1713214881&width=1214",
+    image: "https://pixeldemonmg.co.uk/cdn/shop/files/fandf_11.webp?v=1713214881&width=1214",
     description: "A teenager discovers drifting and becomes involved with Tokyo's underground racing scene.",
     imdblink: "https://www.imdb.com/title/tt0463985/"
   },
@@ -49,7 +49,7 @@ const extraCarMovies = [
     language: "EN",
     genre: ["Action", "Drama", "Adventure"],
     rating: "8.1",
-    image: "https://movingstory-prod.imgix.net/mx/posters/ford-v-ferrari.jpg",
+    image: "https://movingstory-prod.imgix.net/mx/posters/ford-v-ferrari.webp",
     description: "Car designer Carroll Shelby and driver Ken Miles build a revolutionary race car for Ford.",
     imdblink: "https://www.imdb.com/title/tt1950186/"
   },
@@ -60,7 +60,7 @@ const extraCarMovies = [
     language: "EN",
     genre: ["Action", "Drama", "Adventure"],
     rating: "8.1",
-    image: "https://m.media-amazon.com/images/M/MV5BMTZhOGQxM2ItNGQyYy00YzE5LWI5MjMtNmMzNGQzNDE1OTUzXkEyXkFqcGc%40._V1_.jpg",
+    image: "https://m.media-amazon.com/images/M/MV5BMTZhOGQxM2ItNGQyYy00YzE5LWI5MjMtNmMzNGQzNDE1OTUzXkEyXkFqcGc%40._V1_.webp",
     description: "The intense Formula One rivalry between James Hunt and Niki Lauda during the 1970s.",
     imdblink: "https://www.imdb.com/title/tt1979320/"
   },
@@ -71,7 +71,7 @@ const extraCarMovies = [
     language: "EN",
     genre: ["Action", "Drama", "Adventure"],
     rating: "7.1",
-    image: "https://images.squarespace-cdn.com/content/v1/5efce5920d28887981c5bd9b/1690038639462-I53VPPFUXFIX0HQ7C1R8/Gran%2BTurismo%2Bposter%2B2.jpg",
+    image: "https://images.squarespace-cdn.com/content/v1/5efce5920d28887981c5bd9b/1690038639462-I53VPPFUXFIX0HQ7C1R8/Gran%2BTurismo%2Bposter%2B2.webp",
     description: "A teenage gamer uses his racing skills to pursue a real-world career behind the wheel.",
     imdblink: "https://www.imdb.com/title/tt4495098/"
   }
