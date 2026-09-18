@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineTrack - Movie Watchlist</title>
+    <title>Cutscene - Movie Watchlist</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -25,14 +25,11 @@
             <span>⌕</span>
             <input id="searchInput" type="text" placeholder="Search titles...">
         </div>
-
-        <button class="theme-btn" id="themeToggle">☀️</button>
-
+        <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">☀️</button>
         <div class="profile">
             <img src="https://i.pravatar.cc/100?img=12" alt="Profile">
         </div>
-
-        <button class="menu-btn" id="menuBtn">☰</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
     </div>
 </nav>
 
@@ -48,10 +45,8 @@
             <h1>My Watchlist <span id="movieCount">(0 titles)</span></h1>
             <p class="page-subtitle">Movies you want to watch later</p>
         </div>
-
         <div class="header-actions">
             <button class="add-btn" id="addMovieBtn">+ Add Movie</button>
-
             <div class="sort-container">
                 <span>Sort:</span>
                 <select id="sortSelect">
@@ -63,37 +58,19 @@
             </div>
         </div>
     </div>
-
     <section class="movies-grid" id="watchlistGrid"></section>
 </main>
 
 <div class="modal" id="movieModal">
     <div class="modal-content">
-        <button class="close-btn" id="closeModal">×</button>
+        <button class="close-btn" id="closeModal" aria-label="Close">×</button>
         <h2>Add Movie</h2>
         <p class="modal-subtitle">Add a movie to your watchlist.</p>
-
         <form id="movieForm">
-            <label>
-                Movie Title
-                <input id="movieTitle" type="text" required>
-            </label>
-
-            <label>
-                Year
-                <input id="movieYear" type="number" min="1900" max="2100" required>
-            </label>
-
-            <label>
-                Rating
-                <input id="movieRating" type="number" min="0" max="10" step="0.1" required>
-            </label>
-
-            <label>
-                Poster URL
-                <input id="movieImage" type="url" placeholder="https://..." required>
-            </label>
-
+            <label>Movie Title<input id="movieTitle" type="text" required></label>
+            <label>Year<input id="movieYear" type="number" min="1900" max="2100" required></label>
+            <label>Rating<input id="movieRating" type="number" min="0" max="10" step="0.1" required></label>
+            <label>Poster URL<input id="movieImage" type="url" placeholder="https://..." required></label>
             <button class="save-btn" type="submit">Add Movie</button>
         </form>
     </div>
@@ -101,10 +78,8 @@
 
 <div class="modal" id="detailsModal">
     <div class="modal-content details-content">
-        <button class="close-btn" id="closeDetails">×</button>
-
+        <button class="close-btn" id="closeDetails" aria-label="Close">×</button>
         <img id="detailsImage" class="details-image" src="" alt="">
-
         <div class="details-info">
             <h2 id="detailsTitle"></h2>
             <p id="detailsMeta"></p>
