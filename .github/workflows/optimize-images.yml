@@ -1,4 +1,4 @@
-name: Optimize poster images
+name: Optimize images
 
 on:
   push:
@@ -19,14 +19,30 @@ jobs:
       - name: Install WebP tools
         run: sudo apt-get update && sudo apt-get install -y webp
 
-      - name: Convert poster JPGs to WebP
+      - name: Convert and resize images
         shell: bash
         run: |
           set -euo pipefail
+
+          # Create a compact logo for the 148px-wide header/footer display.
+          if [ -f assets/images/logo.png ] && [ ! -f assets/images/logo.webp ]; then
+            cwebp -quiet -q 70 -m 6 -mt -resize 296 0 assets/images/logo.png -o assets/images/logo.webp
+          fi
+
+          # Keep a 320px poster plus smaller variants for responsive loading.
           find assets/images/series -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) -print0 |
           while IFS= read -r -d '' file; do
             out="${file%.*}.webp"
-            cwebp -quiet -q 65 -m 6 -mt -resize 320 0 "$file" -o "$out"
+            if [ ! -f "$out" ]; then
+              cwebp -quiet -q 65 -m 6 -mt -resize 320 0 "$file" -o "$out"
+            fi
+          done
+
+          find assets/images/series -type f -name '*.webp' ! -name '*-160.webp' ! -name '*-200.webp' -print0 |
+          while IFS= read -r -d '' file; do
+            base="${file%.webp}"
+            [ -f "${base}-160.webp" ] || cwebp -quiet -q 65 -m 6 -mt -resize 160 0 "$file" -o "${base}-160.webp"
+            [ -f "${base}-200.webp" ] || cwebp -quiet -q 65 -m 6 -mt -resize 200 0 "$file" -o "${base}-200.webp"
           done
 
       - name: Switch HTML references to WebP
@@ -44,7 +60,7 @@ jobs:
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/images/series . ':!assets/images/series/*.jpg' ':!assets/images/series/*.jpeg' '*.html' '*.css' '*.js' 2>/dev/null || true
+          git add assets/images/series assets/images/logo.webp . ':!assets/images/series/*.jpg' ':!assets/images/series/*.jpeg' '*.html' '*.css' '*.js' 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No image optimization changes."
             exit 0
