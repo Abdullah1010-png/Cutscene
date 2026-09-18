@@ -1,248 +1,103 @@
-// ─── DATA ─────────────────────────────────────────────────────────
 let tvData = [];
 let currentFilter = "all";
 let currentSearch = "";
+let currentSort = "default";
 
-// ─── LOAD DATA ──────────────────────────────────────────────────
 function loadTV() {
-  // Always fetch fresh JSON first (cache‑busting)
   fetch("../assets/data/tv-shows.json?t=" + Date.now())
-    .then((res) => {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.json();
-    })
-    .then((data) => {
-      tvData = data.map((item) => {
-        // Ensure genre is always an array of lowercase strings
-        let genres = [];
-        if (Array.isArray(item.genre)) {
-          genres = item.genre.map((g) => g.toLowerCase());
-        } else if (typeof item.genre === "string") {
-          genres = [item.genre.toLowerCase()];
-        }
-        // If no genre, keep empty array (no fallback)
-        return {
-          ...item,
-          genre: genres,
-        };
-      });
+    .then(res => { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
+    .then(data => {
+      tvData = data.map(item => ({
+        ...item,
+        genre: Array.isArray(item.genre) ? item.genre.map(g => String(g).toLowerCase()) : typeof item.genre === "string" ? [item.genre.toLowerCase()] : []
+      }));
       localStorage.setItem("tvShows", JSON.stringify(tvData));
       renderTV();
     })
-    .catch((err) => {
+    .catch(err => {
       console.error("Failed to fetch tv-shows.json:", err);
-      // Fallback to localStorage
-      let stored = localStorage.getItem("tvShows");
-      if (stored) {
-        try {
-          tvData = JSON.parse(stored).map((item) => {
-            let genres = [];
-            if (Array.isArray(item.genre)) {
-              genres = item.genre.map((g) => g.toLowerCase());
-            } else if (typeof item.genre === "string") {
-              genres = [item.genre.toLowerCase()];
-            }
-            return { ...item, genre: genres };
-          });
-          renderTV();
-          return;
-        } catch (e) {}
-      }
-      const container =
-        document.getElementById("tvContainer") ||
-        document.getElementById("tvShowsContainer");
-      if (container) {
-        container.innerHTML = `<p class="text-danger text-center py-4">⚠️ Could not load TV shows data. Please refresh or check network.</p>`;
+      try {
+        tvData = JSON.parse(localStorage.getItem("tvShows") || "[]");
+        renderTV();
+      } catch (e) {
+        const container = document.getElementById("tvContainer") || document.getElementById("tvShowsContainer");
+        if (container) container.innerHTML = `<p class="text-danger text-center py-4">Could not load TV shows data.</p>`;
       }
     });
 }
 
-// ─── RENDER CARDS ──────────────────────────────────────────────
+function sortItems(items) {
+  const sorted = [...items];
+  switch (currentSort) {
+    case "rating-desc": sorted.sort((a,b) => Number(b.rating||0)-Number(a.rating||0)); break;
+    case "rating-asc": sorted.sort((a,b) => Number(a.rating||0)-Number(b.rating||0)); break;
+    case "year-desc": sorted.sort((a,b) => Number(b.year||0)-Number(a.year||0)); break;
+    case "year-asc": sorted.sort((a,b) => Number(a.year||0)-Number(b.year||0)); break;
+    case "title-asc": sorted.sort((a,b) => String(a.title).localeCompare(String(b.title))); break;
+    case "title-desc": sorted.sort((a,b) => String(b.title).localeCompare(String(a.title))); break;
+  }
+  return sorted;
+}
+
 function renderTV() {
-  const container =
-    document.getElementById("tvContainer") ||
-    document.getElementById("tvShowsContainer");
+  const container = document.getElementById("tvContainer") || document.getElementById("tvShowsContainer");
   const noResults = document.getElementById("noResults");
   if (!container) return;
-
   const searchTerm = currentSearch.toLowerCase().trim();
-
-  let filtered = tvData.filter((item) => {
-    // Genre filter: if not "all", check if the selected genre is in the array
-    if (currentFilter !== "all") {
-      const filterLower = currentFilter.toLowerCase();
-      if (!item.genre.some((g) => g.toLowerCase() === filterLower))
-        return false;
-    }
-    // Search filter
-    if (searchTerm && !item.title.toLowerCase().includes(searchTerm))
-      return false;
-    return true;
+  let filtered = tvData.filter(item => {
+    const genreMatch = currentFilter === "all" || item.genre.includes(currentFilter.toLowerCase());
+    const searchMatch = !searchTerm || String(item.title).toLowerCase().includes(searchTerm);
+    return genreMatch && searchMatch;
   });
-
+  filtered = sortItems(filtered);
   container.innerHTML = "";
-  if (filtered.length === 0) {
-    if (noResults) noResults.classList.remove("d-none");
-    return;
-  }
-  if (noResults) noResults.classList.add("d-none");
+  if (!filtered.length) { noResults?.classList.remove("d-none"); return; }
+  noResults?.classList.add("d-none");
 
-  filtered.forEach((item) => {
-    const col = document.createElement("div");
-    col.className = "col-6 col-md-4 col-lg-4 col-xl-3";
-    col.innerHTML = `
-      <div class="tv-shows-careds" 
-           data-id="${item.id}"
-           data-title="${item.title}"
-           data-year="${item.year}"
-           data-rating="${item.rating}"
-           data-image="${item.image}"
-           data-description="${item.description || "No description."}"
-           data-type="tv"
-           data-imdblink="${item.imdblink || ""}">
-        <div class="tv-shows-postar">
-          <img src="${item.image}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/200x300?text=No+Image'" />
-          <span class="tv-shows-rating">${item.rating}/10</span>
-        </div>
-        <h4>${item.title}</h4>
-        <p>${item.year}</p>
-      </div>
-    `;
+  filtered.forEach(item => {
+    const col = document.createElement("div"); col.className = "col-6 col-md-4 col-lg-4 col-xl-3";
+    col.innerHTML = `<div class="tv-shows-careds" data-id="${item.id}" data-title="${escapeAttribute(item.title)}" data-year="${item.year}" data-rating="${item.rating}" data-image="${escapeAttribute(item.image)}" data-description="${escapeAttribute(item.description || "No description.")}" data-type="tv" data-imdblink="${escapeAttribute(item.imdblink || "")}"><div class="tv-shows-postar"><img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x300?text=No+Image'"/><span class="tv-shows-rating">${item.rating}/10</span></div><h4>${escapeHtml(item.title)}</h4><p>${item.year}</p></div>`;
     container.appendChild(col);
   });
 }
 
-// ─── FILTER + SEARCH ────────────────────────────────────────────
+function escapeHtml(value) { return String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c])); }
+function escapeAttribute(value) { return escapeHtml(value); }
+
 function setupFilters() {
-  document.querySelectorAll(".filter-btn").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      document
-        .querySelectorAll(".filter-btn")
-        .forEach((b) => b.classList.remove("active"));
-      this.classList.add("active");
-      currentFilter = this.dataset.filter; // e.g., "action", "drama", etc.
-      renderTV();
-    });
-  });
-
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("input", function () {
-      currentSearch = this.value;
-      renderTV();
-    });
-  }
+  document.querySelectorAll(".filter-btn").forEach(btn => btn.addEventListener("click", function(){
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    this.classList.add("active"); currentFilter = this.dataset.filter || "all"; renderTV();
+  }));
+  document.getElementById("searchInput")?.addEventListener("input", function(){ currentSearch=this.value; renderTV(); });
+  document.getElementById("tvSearchForm")?.addEventListener("submit", e=>e.preventDefault());
+  document.getElementById("sortSelect")?.addEventListener("change", function(){ currentSort=this.value; renderTV(); });
 }
 
-// ─── MODAL & WATCHLIST ──────────────────────────────────────────
 let watchlist = JSON.parse(localStorage.getItem("cutsceneWatchlist")) || [];
+function saveWatchlist(){ localStorage.setItem("cutsceneWatchlist", JSON.stringify(watchlist)); }
+function isInWatchlist(id,type="tv"){ return watchlist.some(item=>item.id===id && (item.type||"tv")===type); }
 
-function saveWatchlist() {
-  localStorage.setItem("cutsceneWatchlist", JSON.stringify(watchlist));
+function openDetailModal(card){
+  const id=Number(card.dataset.id), title=card.dataset.title, type=card.dataset.type||"tv";
+  document.getElementById("modalTitle").textContent="Details";
+  document.getElementById("modalTitleText").textContent=title;
+  document.getElementById("modalYear").textContent=card.dataset.year;
+  document.getElementById("modalRating").textContent=card.dataset.rating;
+  document.getElementById("modalImage").src=card.dataset.image;
+  document.getElementById("modalDescription").textContent=card.dataset.description;
+  const imdbContainer=document.getElementById("modalImdbContainer"), imdbLink=document.getElementById("modalImdbLink");
+  if(card.dataset.imdblink){imdbLink.href=card.dataset.imdblink; imdbContainer.classList.remove("d-none");} else imdbContainer.classList.add("d-none");
+  const btn=document.getElementById("modalAddWatchlist"), status=document.getElementById("modalWatchlistStatus"), saved=isInWatchlist(id,type);
+  btn.textContent=saved?"Remove from Watchlist":"+ Add to Watchlist"; status.classList.toggle("d-none",!saved);
+  btn.dataset.id=id; btn.dataset.title=title; btn.dataset.year=card.dataset.year; btn.dataset.rating=card.dataset.rating; btn.dataset.image=card.dataset.image; btn.dataset.description=card.dataset.description; btn.dataset.type=type;
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("detailModal")).show();
 }
 
-function isInWatchlist(id) {
-  return watchlist.some((item) => item.id === id);
-}
-
-function openDetailModal(card) {
-  const title = card.dataset.title;
-  const year = card.dataset.year;
-  const rating = card.dataset.rating;
-  const image = card.dataset.image;
-  const description = card.dataset.description;
-  const id = Number(card.dataset.id);
-  const type = card.dataset.type || "tv";
-  const imdblink = card.dataset.imdblink || "";
-
-  document.getElementById("modalTitle").textContent = "Details";
-  document.getElementById("modalTitleText").textContent = title;
-  document.getElementById("modalYear").textContent = year;
-  document.getElementById("modalRating").textContent = rating;
-  document.getElementById("modalImage").src = image;
-  document.getElementById("modalDescription").textContent = description;
-
-  const imdbContainer = document.getElementById("modalImdbContainer");
-  const imdbLink = document.getElementById("modalImdbLink");
-  if (imdblink) {
-    imdbLink.href = imdblink;
-    imdbContainer.classList.remove("d-none");
-  } else {
-    imdbContainer.classList.add("d-none");
-  }
-
-  const addBtn = document.getElementById("modalAddWatchlist");
-  const statusSpan = document.getElementById("modalWatchlistStatus");
-
-  if (isInWatchlist(id)) {
-    addBtn.textContent = "Remove from Watchlist";
-    statusSpan.classList.remove("d-none");
-    statusSpan.textContent = "✓ In your watchlist";
-  } else {
-    addBtn.textContent = "+ Add to Watchlist";
-    statusSpan.classList.add("d-none");
-  }
-
-  addBtn.dataset.id = id;
-  addBtn.dataset.title = title;
-  addBtn.dataset.year = year;
-  addBtn.dataset.rating = rating;
-  addBtn.dataset.image = image;
-  addBtn.dataset.description = description;
-  addBtn.dataset.type = type;
-
-  const modal = new bootstrap.Modal(document.getElementById("detailModal"));
-  modal.show();
-}
-
-// ─── HANDLE WATCHLIST BUTTON IN MODAL ──────────────────────────
-document.addEventListener("click", function (e) {
-  const btn = e.target.closest("#modalAddWatchlist");
-  if (!btn) return;
-  const id = Number(btn.dataset.id);
-  const title = btn.dataset.title;
-  const year = btn.dataset.year;
-  const rating = btn.dataset.rating;
-  const image = btn.dataset.image;
-  const description = btn.dataset.description;
-  const type = btn.dataset.type;
-
-  const index = watchlist.findIndex(
-    (item) => item.id === id && item.type === type,
-  );
-  if (index !== -1) {
-    watchlist.splice(index, 1);
-    btn.textContent = "+ Add to Watchlist";
-    document.getElementById("modalWatchlistStatus").classList.add("d-none");
-  } else {
-    watchlist.push({
-      id,
-      title,
-      year,
-      rating,
-      image,
-      description,
-      type,
-      dateAdded: Date.now(),
-    });
-    btn.textContent = "Remove from Watchlist";
-    const statusSpan = document.getElementById("modalWatchlistStatus");
-    statusSpan.classList.remove("d-none");
-    statusSpan.textContent = "✓ In your watchlist";
-  }
-  saveWatchlist();
+document.addEventListener("click",function(e){
+  const btn=e.target.closest("#modalAddWatchlist");
+  if(btn){const id=Number(btn.dataset.id),type=btn.dataset.type||"tv",index=watchlist.findIndex(item=>item.id===id&&(item.type||"tv")===type); if(index>=0){watchlist.splice(index,1);btn.textContent="+ Add to Watchlist";document.getElementById("modalWatchlistStatus").classList.add("d-none");}else{watchlist.push({id,title:btn.dataset.title,year:btn.dataset.year,rating:btn.dataset.rating,image:btn.dataset.image,description:btn.dataset.description,type,dateAdded:Date.now()});btn.textContent="Remove from Watchlist";document.getElementById("modalWatchlistStatus").classList.remove("d-none");}saveWatchlist();return;}
+  const card=e.target.closest(".tv-shows-careds"); if(card) openDetailModal(card);
 });
 
-// ─── HANDLE CARD CLICK ──────────────────────────────────────────
-document.addEventListener("click", function (e) {
-  const card = e.target.closest(".tv-shows-careds");
-  if (card) {
-    openDetailModal(card);
-  }
-});
-
-// ─── INIT ──────────────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", function () {
-  loadTV();
-  setupFilters();
-});
+document.addEventListener("DOMContentLoaded",()=>{loadTV();setupFilters();});
