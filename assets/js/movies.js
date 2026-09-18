@@ -22,14 +22,14 @@ const extraCarMovies = [
   },
   {
     id: 302,
-    title: "The Fast and the Furious",
-    year: 2001,
+    title: "Fast & Furious",
+    year: 2009,
     language: "EN",
     genre: ["Action", "Crime", "Thriller"],
-    rating: "6.8",
-    image: "https://image.tmdb.org/t/p/w500/8G8x8u7uT5s9Qk5g6Q8JkY8f8fQ.jpg",
-    description: "An undercover police officer gets pulled into the world of illegal street racing.",
-    imdblink: "https://www.imdb.com/title/tt0232500/"
+    rating: "6.6",
+    image: "https://image.tmdb.org/t/p/w500/zvjQPVttJWaCSbzMijyc2x2MLr4.jpg",
+    description: "The Fast & Furious crew reunites as old rivalries and a dangerous criminal investigation bring them back together.",
+    imdblink: "https://www.imdb.com/title/tt1013752/"
   },
   {
     id: 303,
@@ -88,21 +88,15 @@ function normalize(item, defaultLanguage = "EN") {
   };
 }
 
-function saveWatchlist() {
-  localStorage.setItem("cutsceneWatchlist", JSON.stringify(watchlist));
-}
+function saveWatchlist() { localStorage.setItem("cutsceneWatchlist", JSON.stringify(watchlist)); }
 
 function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>'"]/g, char => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", "\"": "&quot;"
-  }[char]));
+  return String(value ?? "").replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[char]));
 }
 
 function posterFallback(title) {
   const safe = String(title).replace(/[<>&\"']/g, "");
-  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750"><rect width="500" height="750" fill="#20232c"/><circle cx="250" cy="280" r="74" fill="#ef233c" opacity=".9"/><path d="M230 245l70 35-70 35z" fill="white"/><text x="250" y="420" fill="white" font-size="28" text-anchor="middle" font-family="Arial">CUTSCENE</text><text x="250" y="465" fill="#a8adb8" font-size="22" text-anchor="middle" font-family="Arial">${safe}</text></svg>`
-  );
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750"><rect width="500" height="750" fill="#20232c"/><circle cx="250" cy="280" r="74" fill="#ef233c" opacity=".9"/><path d="M230 245l70 35-70 35z" fill="white"/><text x="250" y="420" fill="white" font-size="28" text-anchor="middle" font-family="Arial">CUTSCENE</text><text x="250" y="465" fill="#a8adb8" font-size="22" text-anchor="middle" font-family="Arial">${safe}</text></svg>`);
 }
 
 function sortItems(items) {
@@ -118,15 +112,10 @@ function sortItems(items) {
   return sorted;
 }
 
-function isArabic(item) {
-  return item.language === "AR";
-}
-
 function renderMovies() {
   const container = $("moviesContainer");
   const noResults = $("noResults");
   if (!container) return;
-
   const query = currentSearch.trim().toLowerCase();
   let items = moviesData.filter(movie => {
     const genreMatch = currentGenre === "all" || movie.genre.includes(currentGenre);
@@ -134,36 +123,18 @@ function renderMovies() {
     const searchMatch = !query || movie.title.toLowerCase().includes(query);
     return genreMatch && languageMatch && searchMatch;
   });
-
   items = sortItems(items);
   container.innerHTML = "";
-
-  if (!items.length) {
-    noResults?.classList.remove("d-none");
-    return;
-  }
+  if (!items.length) { noResults?.classList.remove("d-none"); return; }
   noResults?.classList.add("d-none");
 
   items.forEach((movie, index) => {
     const col = document.createElement("div");
     col.className = "col-6 col-md-4 col-lg-3 col-xl-3";
-    const arabicClass = isArabic(movie) ? "arabic-movie" : "";
+    const arabicClass = movie.language === "AR" ? "arabic-movie" : "";
     const languageText = movie.language === "AR" ? "AR · عربي" : "E · English";
     const image = escapeHtml(movie.image || posterFallback(movie.title));
-
-    col.innerHTML = `
-      <article class="movies-careds ${arabicClass}" data-id="${movie.id}" style="--delay:${index * 35}ms">
-        <div class="movies-postar">
-          <img src="${image}" alt="${escapeHtml(movie.title)} poster" loading="lazy"
-               onerror="this.onerror=null;this.src='${posterFallback(movie.title)}';">
-          <span class="movies-rating"><i class="fa-solid fa-star"></i> ${movie.rating.toFixed(1)}</span>
-          <span class="language-badge-card ${movie.language === "AR" ? "ar-badge" : "en-badge"}">${movie.language}</span>
-          <span class="poster-play"><i class="fa-solid fa-play"></i></span>
-        </div>
-        <h4>${escapeHtml(movie.title)}</h4>
-        <p>${movie.year} <span>•</span> ${languageText}</p>
-      </article>`;
-
+    col.innerHTML = `<article class="movies-careds ${arabicClass}" data-id="${movie.id}" style="--delay:${index * 35}ms"><div class="movies-postar"><img src="${image}" alt="${escapeHtml(movie.title)} poster" loading="lazy" onerror="this.onerror=null;this.src='${posterFallback(movie.title)}';"><span class="movies-rating"><i class="fa-solid fa-star"></i> ${movie.rating.toFixed(1)}</span><span class="language-badge-card ${movie.language === "AR" ? "ar-badge" : "en-badge"}">${movie.language}</span><span class="poster-play"><i class="fa-solid fa-play"></i></span></div><h4>${escapeHtml(movie.title)}</h4><p>${movie.year} <span>•</span> ${languageText}</p></article>`;
     col.querySelector("article").addEventListener("click", () => openDetails(movie));
     container.appendChild(col);
   });
@@ -178,16 +149,9 @@ function openDetails(movie) {
   modalImage.src = movie.image || posterFallback(movie.title);
   modalImage.onerror = () => { modalImage.onerror = null; modalImage.src = posterFallback(movie.title); };
   modalImage.alt = movie.title + " poster";
-
   const imdb = $("modalImdbContainer");
   const imdbLink = $("modalImdbLink");
-  if (movie.imdblink) {
-    imdbLink.href = movie.imdblink;
-    imdb.classList.remove("d-none");
-  } else {
-    imdb.classList.add("d-none");
-  }
-
+  if (movie.imdblink) { imdbLink.href = movie.imdblink; imdb.classList.remove("d-none"); } else { imdb.classList.add("d-none"); }
   const button = $("modalAddWatchlist");
   const status = $("modalWatchlistStatus");
   const saved = watchlist.some(item => Number(item.id) === Number(movie.id) && (item.type || "movie") === "movie");
@@ -201,64 +165,32 @@ function openDetails(movie) {
   button.dataset.image = movie.image;
   button.dataset.description = movie.description || "";
   button.dataset.language = movie.language;
-
+  button.dataset.genre = movie.genre.join(",");
   bootstrap.Modal.getOrCreateInstance($("detailModal")).show();
 }
 
 function setupControls() {
-  document.querySelectorAll("#genreFilter .filter-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      document.querySelectorAll("#genreFilter .filter-btn").forEach(b => b.classList.remove("active"));
-      button.classList.add("active");
-      currentGenre = button.dataset.filter || "all";
-      renderMovies();
-    });
-  });
-
-  document.querySelectorAll("#languageFilter .language-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      document.querySelectorAll("#languageFilter .language-btn").forEach(b => b.classList.remove("active"));
-      button.classList.add("active");
-      currentLanguage = button.dataset.language || "all";
-      renderMovies();
-    });
-  });
-
-  $("searchInput")?.addEventListener("input", e => {
-    currentSearch = e.target.value;
-    renderMovies();
-  });
+  document.querySelectorAll("#genreFilter .filter-btn").forEach(button => button.addEventListener("click", () => {
+    document.querySelectorAll("#genreFilter .filter-btn").forEach(b => b.classList.remove("active"));
+    button.classList.add("active"); currentGenre = button.dataset.filter || "all"; renderMovies();
+  }));
+  document.querySelectorAll("#languageFilter .language-btn").forEach(button => button.addEventListener("click", () => {
+    document.querySelectorAll("#languageFilter .language-btn").forEach(b => b.classList.remove("active"));
+    button.classList.add("active"); currentLanguage = button.dataset.language || "all"; renderMovies();
+  }));
+  $("searchInput")?.addEventListener("input", e => { currentSearch = e.target.value; renderMovies(); });
   $("movieSearchForm")?.addEventListener("submit", e => e.preventDefault());
-  $("sortSelect")?.addEventListener("change", e => {
-    currentSort = e.target.value;
-    renderMovies();
-  });
-
+  $("sortSelect")?.addEventListener("change", e => { currentSort = e.target.value; renderMovies(); });
   document.addEventListener("click", event => {
     const button = event.target.closest("#modalAddWatchlist");
     if (!button) return;
-
     const id = Number(button.dataset.id);
     const index = watchlist.findIndex(item => Number(item.id) === id && (item.type || "movie") === "movie");
-
     if (index >= 0) {
-      watchlist.splice(index, 1);
-      button.textContent = "+ Add to Watchlist";
-      $("modalWatchlistStatus")?.classList.add("d-none");
+      watchlist.splice(index, 1); button.textContent = "+ Add to Watchlist"; $("modalWatchlistStatus")?.classList.add("d-none");
     } else {
-      watchlist.push({
-        id,
-        type: "movie",
-        title: button.dataset.title,
-        year: Number(button.dataset.year),
-        rating: Number(button.dataset.rating),
-        image: button.dataset.image,
-        description: button.dataset.description,
-        language: button.dataset.language,
-        dateAdded: Date.now()
-      });
-      button.textContent = "Remove from Watchlist";
-      $("modalWatchlistStatus")?.classList.remove("d-none");
+      watchlist.push({ id, type: "movie", title: button.dataset.title, year: Number(button.dataset.year), rating: Number(button.dataset.rating), image: button.dataset.image, description: button.dataset.description, language: button.dataset.language, genre: button.dataset.genre ? button.dataset.genre.split(",") : [], dateAdded: Date.now() });
+      button.textContent = "Remove from Watchlist"; $("modalWatchlistStatus")?.classList.remove("d-none");
     }
     saveWatchlist();
   });
@@ -266,18 +198,10 @@ function setupControls() {
 
 async function loadMovies() {
   try {
-    const [englishResponse, arabicResponse] = await Promise.all([
-      fetch(MOVIES_DATA_URL),
-      fetch(ARABIC_MOVIES_URL)
-    ]);
+    const [englishResponse, arabicResponse] = await Promise.all([fetch(MOVIES_DATA_URL), fetch(ARABIC_MOVIES_URL)]);
     if (!englishResponse.ok || !arabicResponse.ok) throw new Error("Catalog request failed");
-
     const [english, arabic] = await Promise.all([englishResponse.json(), arabicResponse.json()]);
-    moviesData = [
-      ...english.map(item => normalize(item, "EN")),
-      ...arabic.map(item => normalize(item, "AR")),
-      ...extraCarMovies.map(item => normalize(item, "EN"))
-    ];
+    moviesData = [...english.map(item => normalize(item, "EN")), ...arabic.map(item => normalize(item, "AR")), ...extraCarMovies.map(item => normalize(item, "EN"))];
     localStorage.setItem("cutsceneMoviesCatalog", JSON.stringify(moviesData));
   } catch (error) {
     console.error(error);
@@ -286,7 +210,4 @@ async function loadMovies() {
   renderMovies();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  setupControls();
-  loadMovies();
-});
+document.addEventListener("DOMContentLoaded", () => { setupControls(); loadMovies(); });
