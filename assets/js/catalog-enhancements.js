@@ -39,7 +39,7 @@
   }
 
   function addMovieExtras() {
-    if (!Array.isArray(window.moviesData)) return false;
+    if (typeof moviesData === "undefined" || !Array.isArray(moviesData)) return false;
     const ids = new Set(moviesData.map(m => Number(m.id)));
     const extras = [...carMovies, ...arabicMoviesExtra].filter(m => !ids.has(Number(m.id)));
     if (extras.length) moviesData.push(...extras);
@@ -48,7 +48,7 @@
   }
 
   function addTVExtras() {
-    if (!Array.isArray(window.tvData)) return false;
+    if (typeof tvData === "undefined" || !Array.isArray(tvData)) return false;
     const ids = new Set(tvData.map(m => Number(m.id)));
     const extras = arabicShows.filter(m => !ids.has(Number(m.id)));
     if (extras.length) tvData.push(...extras);
