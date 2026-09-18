@@ -1,97 +1,776 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cutscene - Movie Watchlist</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <!-- ترميز النصوص لتشفير الأحرف بدقة وتدعم كافة اللغات -->
+    <meta charset="UTF-8" />
 
-<nav class="navbar">
-    <div class="logo">
-        <div class="logo-icon">▶</div>
-        <span>Cut<span>scene</span></span>
-    </div>
+    <!-- ضبط أبعاد الشاشة لضمان تجاوب الموقع (Responsive) على كل الهواتف والشاشات -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../assets/images/logo.png" />
+    <!-- عنوان الصفحة الذي يظهر في أعلى التبويب بالموقع -->
+    <title>
+      Watch Best New Movies &amp; Shows from Biggest Studios | Cutscene
+    </title>
 
-    <div class="nav-links">
-        <a href="#" class="active">Library</a>
-        <a href="#">Movies</a>
-        <a href="#">TV Shows</a>
-    </div>
+    <!-- استدعاء ملف تنسيقات Bootstrap 5 من الـ CDN مع تفعيل حماية SRI التشفيرية -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
 
-    <div class="nav-right">
-        <div class="search-box">
-            <span>⌕</span>
-            <input id="searchInput" type="text" placeholder="Search titles...">
-        </div>
-        <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">☀️</button>
-        <div class="profile">
-            <img src="https://i.pravatar.cc/100?img=12" alt="Profile">
-        </div>
-        <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
-    </div>
-</nav>
+    <!-- ملف CSS المخصص للتعديل على التصميم الأساسي -->
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/home.css" />
+  </head>
+  <body>
+    <!-- ==========================================
+         شريط التنقل العلوي (Navbar)
+         ========================================== -->
+    <!-- navbar-expand-lg: تجعل القائمة مفرودة في الشاشات الكبيرة وتتحول لزر في الشاشات الصغيرة -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+      <!-- container px-5: حاوية تضمن توسيط المحتوى مع هامش داخلي جانبي -->
+      <div class="container px-5">
+        <!-- الشعار (Logo): رابط ينقل للصفحة الرئيسية -->
+        <a class="navbar-brand me-4" href="#">
+          <img
+            src="assets/images/logo.png"
+            alt="Cutscene Logo"
+            height="36"
+            class="d-inline-block align-text-top"
+          />
+        </a>
 
-<div class="mobile-menu" id="mobileMenu">
-    <a href="#" class="active">Library</a>
-    <a href="#">Movies</a>
-    <a href="#">TV Shows</a>
-</div>
+        <!-- زر الهامبرجر (Toggle Button): يظهر فقط على الهواتف لفتح وغلق القائمة -->
+        <!-- data-bs-toggle & data-bs-target: تربط الزر بـ id القائمة المطوية لفتحها بالجافاسكريبت -->
+        <button
+          class="navbar-toggler custom-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-<main class="watchlist-page">
-    <div class="page-header">
-        <div>
-            <h1>My Watchlist <span id="movieCount">(0 titles)</span></h1>
-            <p class="page-subtitle">Movies you want to watch later</p>
-        </div>
-        <div class="header-actions">
-            <button class="add-btn" id="addMovieBtn">+ Add Movie</button>
-            <div class="sort-container">
-                <span>Sort:</span>
-                <select id="sortSelect">
-                    <option value="date">Date Added</option>
-                    <option value="rating">Rating</option>
-                    <option value="title">Title</option>
-                    <option value="year">Year</option>
-                </select>
+        <!-- القائمة القابلة للطي (Collapsible Area) -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <!-- مجموعة العناصر اليمنى (Right Actions) -->
+          <!-- ms-auto: تضيف هامشاً تلقائياً في البداية ليدفع العناصر إلى أقصى اليمين -->
+          <!-- gap-4: مسافة فاصلة بين القائمة المنسدلة والزر -->
+          <div class="d-flex align-items-center gap-4 right-actions ms-auto">
+            <!-- القائمة المنسدلة لاختيار اللغة (Language Dropdown) -->
+            <div class="nav-item dropdown">
+              <!-- dropdown-toggle: تضيف سهم القائمة المنسدلة وتفعل التفاعل معها -->
+              <a
+                class="nav-link dropdown-toggle text-white fw-semibold d-flex align-items-center gap-1"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                EN
+              </a>
+              <!-- dropdown-menu-dark: تجعل القائمة المنسدلة سوداء للتناسق مع الثيم -->
+              <!-- dropdown-menu-end: تضمن محاذاة القائمة لليمين لكي لا تخرج عن الشاشة -->
+              <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">AR</a></li>
+                <li><a class="dropdown-item" href="#">EN</a></li>
+              </ul>
             </div>
+
+            <!-- زر البدء (Start Button) -->
+            <!-- rounded-pill: تجعل حواف الزر دائرية تماماً (Capsule Style) -->
+            <a
+              href="pages/signup.html"
+              class="btn btn-sign-in text-white rounded-pill fw-bold px-4"
+              >Sign up</a
+            >
+          </div>
         </div>
-    </div>
-    <section class="movies-grid" id="watchlistGrid"></section>
-</main>
+      </div>
+    </nav>
 
-<div class="modal" id="movieModal">
-    <div class="modal-content">
-        <button class="close-btn" id="closeModal" aria-label="Close">×</button>
-        <h2>Add Movie</h2>
-        <p class="modal-subtitle">Add a movie to your watchlist.</p>
-        <form id="movieForm">
-            <label>Movie Title<input id="movieTitle" type="text" required></label>
-            <label>Year<input id="movieYear" type="number" min="1900" max="2100" required></label>
-            <label>Rating<input id="movieRating" type="number" min="0" max="10" step="0.1" required></label>
-            <label>Poster URL<input id="movieImage" type="url" placeholder="https://..." required></label>
-            <button class="save-btn" type="submit">Add Movie</button>
-        </form>
-    </div>
-</div>
+    <!-- ==========================================
+         قسم الواجهة الرئيسية (Hero Section)
+         ========================================== -->
+    <section class="hero">
+      <div class="container text-center">
+        <div class="hero-glow" aria-hidden="true"></div>
 
-<div class="modal" id="detailsModal">
-    <div class="modal-content details-content">
-        <button class="close-btn" id="closeDetails" aria-label="Close">×</button>
-        <img id="detailsImage" class="details-image" src="" alt="">
-        <div class="details-info">
-            <h2 id="detailsTitle"></h2>
-            <p id="detailsMeta"></p>
-            <p>This movie is saved in your personal watchlist.</p>
+        <!-- شارة إشعار المباشر (Now Streaming Badge) -->
+        <p
+          class="eyebrow d-inline-flex align-items-center gap-2 text-uppercase small fw-semibold text-white-50 mb-2"
+        >
+          <span class="eyebrow-dot rounded-circle bg-danger"></span>SCENE 01 —
+          NOW STREAMING
+        </p>
+
+        <!-- العنوان الرئيسي (Main Heading) -->
+        <!-- display-1: خط ضخم وجريء مخصص لليافطات الرئيسية في بوتستراب -->
+        <h1 class="display-1 fw-bold">
+          Unlimited movies,<br />
+          TV shows, and more
+        </h1>
+
+        <!-- النص الوصفي الفرعي (Subtext) -->
+        <!-- lead: يكبر حجم النص والتباعد ليجعل القراءة مريحة للمستخدم -->
+        <p class="lead">
+          Thousands of films and series in one place. Press play<br />
+          whenever the story calls — on any screen, any night.
+        </p>
+
+        <!-- أزرار الدعوة لاتخاذ إجراء (Call-to-Action Buttons) -->
+        <div
+          class="hero-actions d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3"
+        >
+          <a
+            href="./pages/dashboard.html"
+            class="btn btn-primary-accent rounded-pill fw-bold"
+            >Start Watching</a
+          >
+          <a href="#trending" class="btn btn-outline-ghost rounded-pill fw-bold"
+            >See What's Trending</a
+          >
         </div>
-    </div>
-</div>
+      </div>
+    </section>
+    <!-- ==========================================
+         قسم الأعلى مشاهدة الآن (Trending Now)
+         ========================================== -->
+    <section class="trending-section py-5" id="trending">
+      <div class="container">
+        <!-- عنوان القسم مع أزرار التحكم في السلايدر -->
+        <div
+          class="section-heading-row d-flex flex-wrap justify-content-between align-items-end mb-4"
+        >
+          <div>
+            <p
+              class="eyebrow d-inline-flex align-items-center gap-2 text-uppercase small fw-semibold text-white-50 mb-2"
+            >
+              <span class="eyebrow-dot rounded-circle bg-danger"></span>SCENE
+              02 — TRENDING NOW
+            </p>
+            <h3>What everyone's watching tonight</h3>
+          </div>
 
-<footer class="site-footer">
-    <p>All Rights Reserved © Cutscene 2026.</p>
-</footer>
+          <!-- أزرار السابق/التالي للتحكم بالسلايدر يدوياً -->
+          <div class="trending-controls d-flex gap-2">
+            <button
+              type="button"
+              class="slider-btn"
+              id="trendPrevBtn"
+              aria-label="Scroll to previous titles"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="slider-btn"
+              id="trendNextBtn"
+              aria-label="Scroll to next titles"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
 
-<script src="js/script.js"></script>
-</body>
+        <!-- شريط البطاقات القابل للتمرير أفقياً -->
+        <div class="trending-wrapper">
+          <div class="trending-track" id="trendingTrack">
+            <!-- Card 1 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/True Detective.jpg"
+                  alt="True Detective"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play True Detective">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    
+
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>True Detective/h6>
+                <p>2014 · Drama</p>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/Stranger things.jpg"
+                  alt="Stranger things"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play Stranger things">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>Stranger things</h6>
+                <p>2016 · Horror</p>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/Better Call Saul TV Series Poster.jpg"
+                  alt="Better Call Saul"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play Better Call Saul">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>Better Call Saul</h6>
+                <p>2015 · Drama</p>
+              </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/Sherlock.jpg"
+                  alt="Sherlock"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play Sherlock">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>Sherlock</h6>
+                <p>2010 · Thriller</p>
+              </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/friends.jpg"
+                  alt="Friends"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play Friends">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>Friends</h6>
+                <p>1994 · Comedy</p>
+              </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/Dexter.jpg"
+                  alt="Dexter"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play Dexter">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>Dexter</h6>
+                <p>2006 · Serial Killer</p>
+              </div>
+            </article>
+
+            <!-- Card 7 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/The Sopranos.jpg"
+                  alt="The Sopranos"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play The Sopranos">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>The Sopranos</h6>
+                <p>1999 · Crime</p>
+              </div>
+            </article>
+
+            <!-- Card 8 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/Avatar The Last Airbender.jpg"
+                  alt="Avatar The Last Airbender"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play Avatar The Last Airbender">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>Avatar The Last Airbender</h6>
+                <p>2025 · Fantasy</p>
+              </div>
+            </article>
+
+            <!-- Card 9 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/Chernobyl (2019).jpg"
+                  alt="Chernobyl"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play Chernobyl">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>Chernobyl</h6>
+                <p>2019 · Drama</p>
+              </div>
+            </article>
+
+            <!-- Card 10 -->
+            <article class="trending-card">
+              <div class="trending-poster">
+                <img
+                  src="./assets/images/series/the office.jpg"
+                  alt="The Office"
+                  loading="lazy"
+                />
+                
+                <div class="trending-hover">
+                  <button type="button" class="play-circle" aria-label="Play The Office">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="trending-info">
+                <h6>The Office</h6>
+                <p>2005 · Comedy</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+     قسم لماذا كتسين (Why CutScene - Features Cards)
+     ========================================== -->
+    <section class="features-section py-5 ">
+      <div class="container">
+        <div class="text-center mb-4">
+          <p
+            class="eyebrow d-inline-flex align-items-center gap-2 text-uppercase small fw-semibold text-white-50 mb-2"
+          >
+            <span class="eyebrow-dot rounded-circle bg-danger"></span>SCENE 03 —
+            WHY CUTSCENE
+          </p>
+          <h3>Built for how you actually watch</h3>
+        </div>
+        <div class="row g-4">
+          <!-- Card 1 -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="feature-card">
+              <div class="icon-box">
+                <img
+                  src="assets/images/monitor-smartphone.png"
+                  alt="Every screen icon"
+                />
+              </div>
+              <h5>Every screen, one login</h5>
+              <p>
+                Start on your TV, pick it back up on your phone. Your place in
+                the story follows you.
+              </p>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="feature-card">
+              <div class="icon-box">
+                <img
+                  src="assets/images/arrow-down-to-line.png"
+                  alt="Download icon"
+                />
+              </div>
+              <h5>Download and go</h5>
+              <p>
+                Save your favorites before a flight or a commute, and watch
+                without a connection.
+              </p>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="feature-card">
+              <div class="icon-box">
+                <img src="assets/images/users.png" alt="Profiles icon" />
+              </div>
+              <h5>A profile for everyone</h5>
+              <p>
+                Separate watchlists and recommendations for each person in the
+                house.
+              </p>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="feature-card">
+              <div class="icon-box">
+                <img
+                  src="assets/images/circle-x.png"
+                  alt="Cancel anytime icon"
+                />
+              </div>
+              <h5>Leave whenever</h5>
+              <p>
+                No contracts, no phone calls. Cancel your plan online in a
+                couple of clicks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         الأسئلة الشائعة (Frequently Asked Questions)
+         ========================================== -->
+    <section class="faq-section py-5" id="faq">
+      <div class="container">
+        <div class="text-center mb-4">
+          <p
+            class="eyebrow d-inline-flex align-items-center gap-2 text-uppercase small fw-semibold text-white-50 mb-2"
+          >
+            <span class="eyebrow-dot rounded-circle bg-danger"></span>SCENE 04 —
+            GOT QUESTIONS?
+          </p>
+          <h3>Frequently Asked Questions</h3>
+        </div>
+
+        <!-- أكورديون بوتستراب لعرض الأسئلة والأجوبة -->
+        <div class="accordion custom-accordion mx-auto" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingOne">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseOne"
+                aria-expanded="true"
+                aria-controls="faqCollapseOne"
+              >
+                What is CutScene?
+              </button>
+            </h2>
+            <div
+              id="faqCollapseOne"
+              class="accordion-collapse collapse show"
+              aria-labelledby="faqHeadingOne"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                CutScene is a streaming platform where you can watch movies
+                and TV shows from major studios, all in one place, on any
+                screen.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingTwo">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseTwo"
+                aria-expanded="false"
+                aria-controls="faqCollapseTwo"
+              >
+                Do I need to download anything to watch?
+              </button>
+            </h2>
+            <div
+              id="faqCollapseTwo"
+              class="accordion-collapse collapse"
+              aria-labelledby="faqHeadingTwo"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                No downloads are required to stream. You can also save titles
+                for offline viewing so you can watch without a connection.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingThree">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseThree"
+                aria-expanded="false"
+                aria-controls="faqCollapseThree"
+              >
+                Can I use CutScene on more than one device?
+              </button>
+            </h2>
+            <div
+              id="faqCollapseThree"
+              class="accordion-collapse collapse"
+              aria-labelledby="faqHeadingThree"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Yes. Sign in on your TV, phone, tablet, or laptop, and pick up
+                right where you left off.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingFour">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseFour"
+                aria-expanded="false"
+                aria-controls="faqCollapseFour"
+              >
+                How many profiles can I create?
+              </button>
+            </h2>
+            <div
+              id="faqCollapseFour"
+              class="accordion-collapse collapse"
+              aria-labelledby="faqHeadingFour"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                You can set up a separate profile for everyone in your
+                household, each with its own watchlist and recommendations.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingFive">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseFive"
+                aria-expanded="false"
+                aria-controls="faqCollapseFive"
+              >
+                How often is new content added?
+              </button>
+            </h2>
+            <div
+              id="faqCollapseFive"
+              class="accordion-collapse collapse"
+              aria-labelledby="faqHeadingFive"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                New titles are added every week, including fresh releases
+                from major studios and returning seasons of ongoing shows.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingSix">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseSix"
+                aria-expanded="false"
+                aria-controls="faqCollapseSix"
+              >
+                Can I search for a specific movie or show?
+              </button>
+            </h2>
+            <div
+              id="faqCollapseSix"
+              class="accordion-collapse collapse"
+              aria-labelledby="faqHeadingSix"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Yes. Use the search bar to find titles by name, genre, or
+                cast, or browse curated collections on the home screen.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeadingSeven">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseSeven"
+                aria-expanded="false"
+                aria-controls="faqCollapseSeven"
+              >
+                How do I cancel my subscription?
+              </button>
+            </h2>
+            <div
+              id="faqCollapseSeven"
+              class="accordion-collapse collapse"
+              aria-labelledby="faqHeadingSeven"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                There are no contracts. You can cancel online anytime from
+                your account settings — no phone call needed.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         الفوتر (Footer)
+         ========================================== -->
+    <footer class="custom-footer footer-expanded">
+      <div class="container">
+        <div class="row gy-4 pb-4">
+          <!-- عمود الشعار والوصف -->
+          <div class="col-12 col-md-4">
+            <a class="footer-brand d-inline-flex align-items-center" href="#">
+              <img src="assets/images/logo.png" alt="Cutscene Logo" />
+            </a>
+            <p class="footer-about">
+              Thousands of films and series, one login away. Press play
+              whenever the story calls — on any screen, any night.
+            </p>
+            <!-- روابط وسائل التواصل الاجتماعي -->
+            <div class="footer-social d-flex gap-2">
+              <a href="#" class="social-icon" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1"></circle></svg>
+              </a>
+              <a href="#" class="social-icon" aria-label="X">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H21l-6.6 7.5L22 21h-6.1l-4.8-6.3L5.6 21H3.4l7-8L2 3h6.2l4.3 5.7L18.9 3zm-1.1 16h1.2L7.2 5H6l11.8 14z"></path></svg>
+              </a>
+              <a href="#" class="social-icon" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="12" rx="4"></rect><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"></path></svg>
+              </a>
+              <a href="#" class="social-icon" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3c.4 2.1 1.9 3.6 4 3.9v2.8c-1.4-.1-2.7-.6-3.8-1.4v6.1a5 5 0 1 1-4.3-4.9v2.9a2.2 2.2 0 1 0 1.6 2.1V3h2.5z"></path></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- عمود روابط التصفح -->
+          <div class="col-6 col-md-2">
+            <h6 class="footer-heading">Browse</h6>
+            <ul class="footer-links list-unstyled">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Movies</a></li>
+              <li><a href="#">TV Shows</a></li>
+              <li><a href="#">Search</a></li>
+              <li><a href="#">My Library</a></li>
+            </ul>
+          </div>
+
+          <!-- عمود روابط الدعم -->
+          <div class="col-6 col-md-3">
+            <h6 class="footer-heading">Support</h6>
+            <ul class="footer-links list-unstyled">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Supported Devices</a></li>
+            </ul>
+          </div>
+
+          <!-- عمود الروابط القانونية -->
+          <div class="col-6 col-md-3">
+            <h6 class="footer-heading">Legal</h6>
+            <ul class="footer-links list-unstyled">
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Cookie Preferences</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="footer-divider" />
+
+        <!-- الشريط السفلي لحقوق النشر -->
+        <div
+          class="footer-bottom d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 text-center text-sm-start"
+        >
+          <p class="mb-0">All Rights Reserved Cutscene 2026 ©.</p>
+          <p class="mb-0 footer-tagline">Roll credits — see you at the next scene.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ملف Bootstrap Javascript Bundle (يشمل التفاعلات مثل فتح القوائم والـ Dropdowns) -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- ملف الجافاسكريبت الخاص بالصفحة (سلايدر الأعلى مشاهدة وتأثير شريط التنقل) -->
+    <script src="./assets/js/home.js"></script>
+  </body>
 </html>

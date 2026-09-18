@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Cutscene</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/signin.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body>
+    <!-- صفحة تسجيل الدخول -->
+    <div class="signin-page d-flex align-items-center justify-content-center min-vh-100 py-5 px-3">
+        <!-- الكارت -->
+        <div class="signin-card position-relative">
+            <!-- زرار الإغلاق -->
+            <a href="../index.html" class="signin-close" aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </a>
+            <!-- شعار الموقع -->
+            <div class="signin-icon rounded-4 d-flex align-items-center justify-content-center mx-auto mb-4">
+                <img src="../assets/images/logo.png" alt="Cutscene" height="32">
+            </div>
+            <!-- العنوان -->
+            <h1 class="fs-3 fw-bold text-center mb-2">Sign in</h1>
+            <p class="text-white-50 text-center mb-4">Welcome back to Cutscene.</p>
+            <!-- الفورم -->
+            <form>
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label small text-uppercase fw-semibold text-white-50">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                </div>
+                <!-- Password -->
+                <div class="mb-4">
+                    <label for="password" class="form-label small text-uppercase fw-semibold text-white-50">Password</label>
+                    <div class="position-relative">
+                        <input type="password" class="form-control pe-5" id="password" name="password" placeholder="Your password" minlength="6" required>
+                        <!-- زرار إظهار وإخفاء الباسورد -->
+                        <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password">
+                            <svg id="toggleIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- زرار تسجيل الدخول -->
+                <button type="submit" class="btn btn-primary rounded-pill w-100 py-2 fw-semibold">Sign In</button>
+            </form>
+            <!-- الانتقال إلى Sign Up -->
+            <p class="text-center text-white-50 mt-4 mb-0">
+                Don't have an account?
+                <a href="signup.html" class="signin-link fw-semibold text-decoration-none">Sign Up</a>
+            </p>
+        </div>
+    </div>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- إظهار / إخفاء كلمة المرور -->
+    <script>
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const eyeOpen = `<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>`;
+        const eyeClosed = `<path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a18.5 18.5 0 0 1 5.06-5.94"/><path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 7 11 7a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>`;
+        toggleBtn.addEventListener('click', function () {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggleIcon.innerHTML = isPassword ? eyeClosed : eyeOpen;
+            toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        });
+    </script>
+</body>
+</html>

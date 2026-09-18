@@ -1,0 +1,154 @@
+/* ==========================================
+   THEME TOGGLE — new file, added on top of the
+   existing stylesheets. Nothing here overrides or
+   edits dashboard.css / library.css / movies.css /
+   tv-shows.css — it only adds the switch itself and
+   a light-mode variant of the project's own tokens.
+   ========================================== */
+
+/* ---- The switch ---- */
+.theme-toggle-btn {
+  position: relative;
+  width: 54px;
+  height: 28px;
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-soft, rgba(255, 255, 255, .15));
+  background-color: rgba(255, 255, 255, .08);
+  cursor: pointer;
+  transition: background-color .3s ease, border-color .3s ease;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--color-accent);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
+  transition: left .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.theme-toggle-icon {
+  position: absolute;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  transform: translateY(-50%);
+  display: flex;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.theme-toggle-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.theme-icon-moon {
+  left: 7px;
+  color: #c7ccd6;
+  opacity: .55;
+}
+
+.theme-icon-sun {
+  right: 7px;
+  color: #f4b942;
+  opacity: 1;
+}
+
+/* Knob + icon state when light mode is active */
+[data-theme="light"] .theme-toggle-knob {
+  left: 27px;
+}
+
+[data-theme="light"] .theme-icon-sun {
+  opacity: .45;
+}
+
+[data-theme="light"] .theme-icon-moon {
+  opacity: 1;
+}
+
+/* ==========================================
+   LIGHT MODE
+   Re-maps the project's own design tokens.
+   dashboard.css / library.css / movies.css /
+   tv-shows.css already read every color from
+   these variables, so the rest of each page
+   follows automatically once these change.
+   ========================================== */
+:root[data-theme="light"] {
+  --color-bg: #f5f3f0;
+  --color-bg-navbar: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-bg-icon: #efece8;
+  --color-text: #17181c;
+  --color-text-muted: #52555c;
+  --color-text-subtle: #797d85;
+  --color-border: #e3e0db;
+  --color-border-soft: #ebe8e3;
+}
+
+/* A few elements use fixed Bootstrap utility classes
+   (bg-dark, text-white, border-secondary) instead of
+   the tokens above — mainly the shared detail modal —
+   so they get their own light-mode rule here. */
+[data-theme="light"] .modal-content.bg-dark {
+  background-color: var(--color-bg-card) !important;
+  color: var(--color-text) !important;
+}
+
+[data-theme="light"] .modal-content.border-secondary,
+[data-theme="light"] .modal-header.border-secondary,
+[data-theme="light"] .modal-footer.border-secondary {
+  border-color: var(--color-border) !important;
+}
+
+[data-theme="light"] .btn-close-white {
+  filter: none;
+}
+
+[data-theme="light"] .text-white {
+  color: var(--color-text) !important;
+}
+
+[data-theme="light"] .text-white-50 {
+  color: var(--color-text-muted) !important;
+}
+
+[data-theme="light"] .text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+[data-theme="light"] .modal-content .btn-outline-light {
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="light"] .modal-content .btn-outline-light:hover {
+  background-color: var(--color-bg-icon);
+  color: var(--color-text);
+}
+
+[data-theme="light"] .form-control {
+  background-color: #ffffff;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="light"] .form-control::placeholder {
+  color: var(--color-text-subtle);
+}

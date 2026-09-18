@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../assets/images/logo.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/dashboard.css" />
+    <link rel="stylesheet" href="../assets/css/theme-toggle.css" />
+    <title>Home</title>
+  </head>
+  <body>
+    <!-- ==========================================
+         NAVBAR
+         ========================================== -->
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand" href="dashboard.html">
+          <img
+            src="../assets/images/logo.png"
+            alt="Cutscene Logo"
+            width="50"
+            height="50"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="dashboard.html"
+                >Dashboard</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="movies.html">Movies</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tv-shows.html">TV Shows</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="library.html">Library</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control rounded-5 me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
+          <button
+            class="theme-toggle-btn ms-lg-3"
+            id="themeToggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="Toggle light and dark mode"
+          >
+            <span class="theme-toggle-icon theme-icon-moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+            <span class="theme-toggle-icon theme-icon-sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+            <span class="theme-toggle-knob"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ==========================================
+         MOVIES SECTION
+         ========================================== -->
+    <section class="top-rated-section py-5">
+      <div class="container">
+        <div class="mb-4">
+          <p
+            class="eyebrow d-inline-flex align-items-center gap-2 text-uppercase small fw-semibold text-white-50 mb-2"
+          >
+            <span class="eyebrow-dot rounded-circle bg-danger"></span>Scene 01 —
+            Movies
+          </p>
+          <h3 class="fw-bold">Top Rated</h3>
+        </div>
+
+        <!-- Movies Grid – card size changed from col-xl-2 to col-xl-3 -->
+        <div class="row g-4" id="moviesContainer"></div>
+        <!-- /row -->
+      </div>
+      <!-- /container -->
+    </section>
+
+    <!-- ==========================================
+         TV SHOWS SECTION
+         ========================================== -->
+    <section class="top-rated-section py-5">
+      <div class="container">
+        <div class="mb-4">
+          <p
+            class="eyebrow d-inline-flex align-items-center gap-2 text-uppercase small fw-semibold text-white-50 mb-2"
+          >
+            <span class="eyebrow-dot rounded-circle bg-danger"></span>Scene 02 —
+            TV Shows
+          </p>
+          <h3 class="fw-bold">Top Rated</h3>
+        </div>
+
+        <!-- TV Shows Grid – size changed from col-xl-2 to col-xl-3 -->
+        <div class="row g-4" id="tvShowsContainer"></div>
+        <!-- /row -->
+      </div>
+      <!-- /container -->
+    </section>
+
+    <footer class="custom-footer">
+      <div class="container text-center">
+        <p class="mb-0">All Rights Reserved Cutscene 2026 ©.</p>
+      </div>
+    </footer>
+
+    <!-- ==========================================
+         DETAIL MODAL (pop-up)
+         ========================================== -->
+    <div
+      class="modal fade"
+      id="detailModal"
+      tabindex="-1"
+      aria-labelledby="detailModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-secondary">
+          <div class="modal-header border-secondary">
+            <h5 class="modal-title" id="detailModalLabel">Details</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  id="modalImage"
+                  src=""
+                  alt="Poster"
+                  class="img-fluid rounded"
+                />
+              </div>
+              <div class="col-md-8">
+                <h3 id="modalTitle"></h3>
+                <p><strong>Year:</strong> <span id="modalYear"></span></p>
+                <p><strong>Rating:</strong> <span id="modalRating"></span></p>
+                <p>
+                  <strong>Description:</strong>
+                  <span id="modalDescription">No description available.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-secondary">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/theme-toggle.js"></script>
+  </body>
+</html>

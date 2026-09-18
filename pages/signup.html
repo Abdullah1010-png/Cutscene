@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ترميز النصوص لتشفير الأحرف بدقة وتدعم كافة اللغات -->
+    <meta charset="UTF-8">
+
+    <!-- ضبط أبعاد الشاشة لضمان تجاوب الموقع (Responsive) على كل الهواتف والشاشات -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- عنوان الصفحة الذي يظهر في أعلى التبويب بالموقع -->
+    <title>Create Account | Cutscene</title>
+
+    <!-- استدعاء ملف تنسيقات Bootstrap 5 من الـ CDN مع تفعيل حماية SRI التشفيرية -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- ملف CSS المخصص للتعديل على التصميم الأساسي -->
+    <link rel="stylesheet" href="../assets/css/signup.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+
+</head>
+<body>
+
+    <!-- ==========================================
+         صفحة إنشاء حساب (Sign Up)
+         ========================================== -->
+    <!-- min-vh-100: الصفحة تاخد ارتفاع الشاشة على الأقل من غير ما تتقص لو الفورم طويل -->
+    <div class="signup-page d-flex align-items-center justify-content-center min-vh-100 py-5 px-3">
+
+        <!-- الكارت اللي فيه الفورم -->
+        <div class="signup-card position-relative">
+
+            <!-- زرار الإغلاق، بيرجع للصفحة الرئيسية -->
+            <a href="../index.html" class="signup-close" aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </a>
+
+            <!-- شعار الموقع فوق الفورم -->
+            <div class="signup-icon rounded-4 d-flex align-items-center justify-content-center mx-auto mb-4">
+                <img src="../assets/images/logo.png" alt="Cutscene" height="32">
+            </div>
+
+            <!-- العنوان والوصف -->
+            <h1 class="fs-3 fw-bold text-center mb-2">Create account</h1>
+            <p class="text-white-50 text-center mb-3">Save favorites, rate titles, and pick up where you left off.</p>
+
+            <!-- تنبيه صغير تحت الوصف -->
+            <p class="signup-tip text-center small text-white-50 mb-4">
+                💡 Set up a profile for everyone in the house after signing up.
+            </p>
+
+            <!-- ==========================================
+                 الفورم
+                 ========================================== -->
+            <form>
+
+                <!-- حقل اسم المستخدم: من 3 لـ 5 حروف -->
+                <div class="mb-3">
+                    <label for="username" class="form-label small text-uppercase fw-semibold text-white-50">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder="myname" minlength="3" maxlength="20" required>
+                    
+                </div>
+
+                <!-- حقل الإيميل -->
+                <div class="mb-3">
+                    <label for="email" class="form-label small text-uppercase fw-semibold text-white-50">Email</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           placeholder="you@example.com" required>
+                </div>
+
+                <!-- حقل كلمة المرور مع زرار إظهار/إخفاء -->
+                <div class="mb-4">
+                    <label for="password" class="form-label small text-uppercase fw-semibold text-white-50">Password</label>
+                    <div class="position-relative">
+                        <input type="password" class="form-control pe-5" id="password" name="password"
+                               placeholder="At least 6 characters" minlength="6" required>
+                        <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password">
+                            <svg id="toggleIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- زرار الإرسال -->
+                <button type="submit" class="btn btn-primary rounded-pill w-100 py-2 fw-semibold">Create Account</button>
+
+            </form>
+
+            <!-- رابط الانتقال لصفحة تسجيل الدخول -->
+            <p class="text-center text-white-50 mt-4 mb-0">
+                Already have an account?
+                <a href="signin.html" class="signup-link fw-semibold text-decoration-none">Sign In</a>
+            </p>
+
+        </div>
+    </div>
+
+    <!-- ملف Bootstrap Javascript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <!-- ==========================================
+         سكريبت بسيط لإظهار/إخفاء كلمة المرور
+         ========================================== -->
+    <script>
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        // شكل العين المفتوحة (إظهار)
+        const eyeOpen = `<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>`;
+        // شكل العين المشطوبة (إخفاء)
+        const eyeClosed = `<path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a18.5 18.5 0 0 1 5.06-5.94"/><path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 7 11 7a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>`;
+
+        toggleBtn.addEventListener('click', function () {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggleIcon.innerHTML = isPassword ? eyeClosed : eyeOpen;
+            toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "title": "Breaking Bad",
+    "year": 2008,
+    "imdblink": "https://www.imdb.com/title/tt0903747/",
+    "genre":[ "Crime", "Drama", "Thriller","Western"],
+    "rating": "9.5",
+    "image": "https://m.media-amazon.com/images/M/MV5BOWE4NTc3YmYtNmU2Mi00ZjhkLWE1MTItZmM1M2U1ODU3YjFlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "A chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine with a former student to secure his family's future."
+  },
+  {
+    "id": 2,
+    "title": "Band of Brothers",
+    "year": 2001,
+    "imdblink": "https://www.imdb.com/title/tt0185906/",
+    "genre":[ "Action", "Adventure","Drama", "History", "Mini-Series","War"],
+    "rating": "9.4",
+    "image": "https://m.media-amazon.com/images/M/MV5BYjdlNGJlYjQtMDU2Mi00ZjA1LWEwYzgtYzlmNDM5MmE1ZGUwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "The men of Easy Company, 506th Parachute Infantry Regiment, train for war and fight across Europe during World War II, forging bonds of brotherhood amid the brutal realities of combat."
+  },
+  {
+    "id": 3,
+    "title": "The Wire",
+    "year": 2002,
+    "imdblink": "https://www.imdb.com/title/tt0306414/",
+    "genre":[ "Crime", "Drama", "Thriller"],
+    "rating": "9.3",
+    "image": "https://m.media-amazon.com/images/M/MV5BYjIxZTMwZmUtOTUzYS00YmU2LWJhNDAtNzA2NDg0NDA0MjVkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "A gritty portrayal of the drug trade in Baltimore, seen through the eyes of both law enforcement and criminals."
+  },
+  {
+    "id": 4,
+    "title": "Chernobyl",
+    "year": 2019,
+    "imdblink": "https://www.imdb.com/title/tt7366338/",
+    "genre":[ "Drama", "History","Mini-Series", "Thriller"],
+    "rating": "9.3",
+    "image": "https://m.media-amazon.com/images/M/MV5BNzU0OTI4YTQtNGQ1ZS00ZjA4LTg3MTMtZjkyZWNjN2RiZDJmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "In April 1986, the city of Chernobyl in the Soviet Union suffers one of the worst nuclear disasters in the history of mankind. Consequently, many heroes put their lives on the line in the following days, weeks and months."
+  },
+  {
+    "id": 5,
+    "title": "Avatar: The Last Airbender",
+    "year": 2005,
+    "imdblink": "https://www.imdb.com/title/tt0417299/",
+    "genre":[ "Action","Adventure","Animation","Comedy","Fantasy","Martial Arts"],
+    "rating": "9.3",
+    "image": "https://m.media-amazon.com/images/M/MV5BMDMwMThjYWYtY2Q2OS00OGM2LTlkODQtNDJlZTZmMjAyYmFhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "After a century frozen in ice, young Avatar Aang journeys with friends to master the four elements and bring balance to a world at war with the Fire Nation."
+  },
+  {
+    "id": 6,
+    "title": "The Sopranos",
+    "year": 1999,
+    "imdblink": "https://www.imdb.com/title/tt0141842/",
+    "genre":[ "Crime", "Drama"],
+    "rating": "9.2",
+    "image": "https://m.media-amazon.com/images/M/MV5BZjYwNWQwOTMtMzYwOS00NTcxLWFhNTYtNGQ4YjdmYTcyNDFkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "New Jersey mob boss Tony Soprano deals with personal and professional issues in his home and business life that affect his mental state, leading him to seek professional psychiatric counseling."
+  },
+  {
+    "id": 7,
+    "title": "Game of Thrones",
+    "year": 2011,
+    "imdblink": "https://www.imdb.com/title/tt0944947/",
+    "genre":["Action","Adventure","Drama","Fantasy"],
+    "rating": "9.2",
+    "image": "https://m.media-amazon.com/images/M/MV5BNGYxOGJkMjItZjVkZC00OGEzLWExNjktOTZmNGZhZmRlMTk2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "Nine noble families vie for control of Westeros and the Iron Throne, while an ancient threat beyond The Wall begins to stir."
+  },
+  {
+    "id": 8,
+    "title": "Attack on Titan",
+    "year": 2013,
+    "imdblink": "https://www.imdb.com/title/tt2560140/",
+    "genre":["Action","Adventure","Animation","Anime","Drama","Fantasy","Horror"],
+    "rating": "9.1",
+    "image": "https://m.media-amazon.com/images/M/MV5BZjliODY5MzQtMmViZC00MTZmLWFhMWMtMjMwM2I3OGY1MTRiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "In a world where humanity shelters behind towering walls from man-eating Titans, a determined teen joins the elite Survey Corps to fight the giants and uncover the secrets of their origin."
+  },
+  {
+    "id": 9,
+    "title": "Fullmetal Alchemist: Brotherhood",
+    "year": 2009,
+    "imdblink": "https://www.imdb.com/title/tt1355642/",
+    "genre":["Action","Adventure","Animation","Anime","Comedy","Drama","Fantasy","Sci-Fi"],
+    "rating": "9.1",
+    "image": "https://m.media-amazon.com/images/M/MV5BMzNiODA5NjYtYWExZS00OTc4LTg3N2ItYWYwYTUyYmM5MWViXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "Two brothers search for a Philosopher's Stone after an attempt to revive their deceased mother goes awry and leaves them in damaged physical forms."
+  },
+  {
+    "id": 10,
+    "title": "Bleach: Thousand-Year Blood War",
+    "year": 2022,
+    "imdblink": "https://www.imdb.com/title/tt14986406/",
+    "genre":["Action","Adventure","Animation","Anime","Fantasy","Martial Arts"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BMjgyM2QzMjAtOGZjOS00OGFkLTkxZGYtMDJjZGM5MzIzYmM3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description":"The peace is suddenly broken when warning sirens blare through the Soul Society. Residents are disappearing without a trace and nobody knows who's behind it. Meanwhile, a darkness is approaching Ichigo and his friends in Karakura Town."
+  },
+  {
+    "id": 11,
+    "title": "Rick and Morty",
+    "year": 2013,
+    "imdblink": "https://www.imdb.com/title/tt2861424/",
+    "genre":["Adventure","Animation","Comedy","Sci-Fi"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BZGQyZjk2MzMtMTcyNC00NGU3LTlmNjItNDExMWM4ZDFhYmQ2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "The fractured domestic lives of a nihilistic mad scientist and his anxious grandson are further complicated by their inter-dimensional misadventures."
+  },
+  {
+    "id": 12,
+    "title": "Better Call Saul",
+    "year": 2015,
+    "imdblink": "https://www.imdb.com/title/tt3032476/",
+    "genre":["Crime","Drama"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BMTAxOTQ0MjUzMzJeQTJeQWpwZ15BbWU4MDY0NTAxNzMx._V1_FMjpg_UX1000_.jpg",
+    "description": "Albuquerque lawyer Jimmy McGill scrapes for clients and respect, but every win drags him closer to shady deals, dangerous players, and the alter ego Saul Goodman."
+  },
+  {
+    "id": 13,
+    "title": "The Office",
+    "year": 2005,
+    "imdblink": "https://www.imdb.com/title/tt0386676/",
+    "genre":["Comedy","Drama"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BZjQwYzBlYzUtZjhhOS00ZDQ0LWE0NzAtYTk4MjgzZTNkZWEzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "A mockumentary on a group of typical office workers, where the workday consists of ego clashes, inappropriate behavior, tedium and romance."
+  },
+  {
+    "id": 14,
+    "title": "One Piece",
+    "year": 1999,
+    "imdblink": "https://www.imdb.com/title/tt0388629/",
+    "genre":["Action","Adventure","Animation","Comedy","Drama","Fantasy"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BMTNjNGU4NTUtYmVjMy00YjRiLTkxMWUtNzZkMDNiYjZhNmViXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "A spirited young pirate sets sail with a growing crew in search of the legendary One Piece, facing dangerous seas and powerful rivals on his quest to become King of the Pirates."
+  },
+  {
+    "id": 15,
+    "title": "Dexter",
+    "year": 2006,
+    "imdblink": "https://www.imdb.com/title/tt0773262/",
+    "genre":["Crime","Drama","Mystery","Suspense","Thriller"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BNTE5ZGI2N2UtYmFiMi00ZGIxLWI1ZTMtYWJkZDYxNDZiOTQwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "He's smart. He's lovable. He's Dexter Morgan, America's favorite serial killer, who spends his days solving crimes and his nights committing them."
+  },
+  {
+    "id": 16,
+    "title": "Sherlock",
+    "year": 2010,
+    "imdblink": "https://www.imdb.com/title/tt1475582/",
+    "genre":["Crime","Drama","Mystery","Suspense","Thriller"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BMjRhZDdjMDYtMTg5Yy00NGI4LWI3ZDgtYjNkNDc4MzJkNDRjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "In modern-day London, brilliant but eccentric detective Sherlock Holmes teams with war veteran Dr. John Watson to crack baffling crimes, outwit formidable foes, and aid Scotland Yard with razor-sharp deduction."
+  },
+  {
+    "id": 17,
+    "title": "Arcane",
+    "year": 2021,
+    "imdblink": "https://www.imdb.com/title/tt11126994/",
+    "genre":["Action","Adventure","Animation","Drama","Fantasy","Sci-Fi"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BYjA2NzhlMDItNWRmZC00MzRjLWE3ZjAtZjBlZDAwOWY2ODdjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "Amid the stark discord of twin cities Piltover and Zaun, two sisters fight on rival sides of a war between magic technologies and clashing convictions."
+  },
+  {
+    "id": 18,
+    "title": "Hunter X Hunter",
+    "year": 2011,
+    "imdblink": "https://www.imdb.com/title/tt2098220/",
+    "genre":["Action","Adventure","Animation","Anime","Comedy","Drama","Fantasy"],
+    "rating": "9.0",
+    "image": "https://m.media-amazon.com/images/M/MV5BYzYxOTlkYzctNGY2MC00MjNjLWIxOWMtY2QwYjcxZWIwMmEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    "description": "Gon Freecss aspires to become a Hunter, an exceptional being capable of greatness. With his friends and his potential, he seeks out his father, who left him when he was younger."
+  }
+]

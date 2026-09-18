@@ -1,0 +1,206 @@
+/* ==========================================
+   NAVBAR (consistent across all pages)
+   ========================================== */
+.navbar {
+    background-color: var(--color-bg-navbar) !important;
+    border-bottom: 1px solid var(--color-border-soft);
+}
+
+.navbar a:hover {
+    color: var(--color-accent) !important;
+}
+
+/* ==========================================
+   TOP RATED SECTION – container
+   ========================================== */
+.top-rated-section {
+    color: var(--color-text);
+}
+
+/* ==========================================
+   SECTION HEADER (eyebrow + title)
+   ========================================== */
+.eyebrow {
+    letter-spacing: .14em;
+}
+
+.eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    box-shadow: 0 0 10px rgba(229, 9, 20, .75);
+}
+
+.top-rated-section h2 {
+    font-family: var(--font-display);
+    font-size: 42px;
+    letter-spacing: -1px;
+    color: var(--color-text);
+}
+
+/* ==========================================
+   MOVIE / TV SHOW CARDS
+   (matches movies.css / tv-shows.css)
+   ========================================== */
+
+/* ---- Shared card base ---- */
+.movies-careds,
+.tv-shows-careds {
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: cardReveal .7s ease forwards;
+}
+
+@keyframes cardReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---- Poster container ---- */
+.movies-postar,
+.tv-shows-postar {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-card);
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.movies-postar img,
+.tv-shows-postar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .6s ease, filter .6s ease;
+}
+
+/* ---- Hover overlay ---- */
+.movies-postar::after,
+.tv-shows-postar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent 55%);
+    opacity: 0;
+    transition: opacity .4s ease;
+}
+
+.movies-careds:hover .movies-postar,
+.tv-shows-careds:hover .tv-shows-postar {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .45);
+}
+
+.movies-careds:hover .movies-postar img,
+.tv-shows-careds:hover .tv-shows-postar img {
+    transform: scale(1.08);
+    filter: brightness(.75);
+}
+
+.movies-careds:hover .movies-postar::after,
+.tv-shows-careds:hover .tv-shows-postar::after {
+    opacity: 1;
+}
+
+/* ---- Rating badge ---- */
+.movies-rating,
+.tv-shows-rating {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    background-color: var(--color-bg-icon);
+    color: var(--color-text);
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 13px;
+    border: 1px solid var(--color-border-soft);
+    transition: transform .4s ease, background-color .4s ease;
+}
+
+.movies-careds:hover .movies-rating,
+.tv-shows-careds:hover .tv-shows-rating {
+    transform: translateY(-3px) scale(1.05);
+    background-color: var(--color-accent);
+}
+
+/* ---- Title ---- */
+.movies-careds h4,
+.tv-shows-careds h4 {
+    color: var(--color-text);
+    font-size: 14px;
+    margin: 8px 0 2px;
+    transition: transform .4s ease, color .4s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movies-careds:hover h4,
+.tv-shows-careds:hover h4 {
+    transform: translateX(4px);
+    color: var(--color-accent);
+}
+
+/* ---- Year ---- */
+.movies-careds p,
+.tv-shows-careds p {
+    color: var(--color-text-subtle);
+    font-size: 12px;
+    margin: 0;
+    transition: transform .4s ease;
+}
+
+.movies-careds:hover p,
+.tv-shows-careds:hover p {
+    transform: translateX(4px);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 767.98px) {
+    .top-rated-section h2 {
+        font-size: 32px;
+    }
+
+    .movies-careds h4,
+    .tv-shows-careds h4 {
+        font-size: 13px;
+    }
+
+    .movies-rating,
+    .tv-shows-rating {
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .top-rated-section h2 {
+        font-size: 26px;
+    }
+
+    .movies-careds h4,
+    .tv-shows-careds h4 {
+        font-size: 12px;
+    }
+
+    .movies-rating,
+    .tv-shows-rating {
+        font-size: 11px;
+        padding: 2px 5px;
+    }
+
+    .movies-careds p,
+    .tv-shows-careds p {
+        font-size: 11px;
+    }
+}

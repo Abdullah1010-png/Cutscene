@@ -1,0 +1,73 @@
+/* ================= صفحة تسجيل الدخول ================= */
+
+/* خلفية الصفحة كلها */
+.signin-page {
+    background: var(--color-bg);
+}
+
+/* الكارت */
+.signin-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-accent);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+}
+
+/* زرار الإغلاق أعلى يمين الكارت */
+.signin-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--color-accent);
+}
+
+.signin-close:hover {
+    color: #fff;
+}
+
+/* مربع الشعار */
+.signin-icon {
+    width: 64px;
+    height: 64px;
+}
+
+/* تنسيق حقول الفورم */
+.signin-card .form-control {
+    background: rgba(255, 255, 255, .05);
+    border-color: var(--bs-border-color);
+    color: #fff;
+    padding: .75rem 1rem;
+}
+
+.signin-card .form-control::placeholder {
+    color: rgba(255, 255, 255, .35);
+}
+
+.signin-card .form-control:focus {
+    background: rgba(255, 255, 255, .08);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 .2rem rgba(229, 9, 20, .2);
+    color: #fff;
+}
+
+/* زرار إظهار / إخفاء كلمة المرور */
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--bs-secondary-color);
+}
+
+.password-toggle:hover {
+    color: #fff;
+}
+
+/* رابط Sign Up */
+.signin-link {
+    color: var(--bs-primary);
+}

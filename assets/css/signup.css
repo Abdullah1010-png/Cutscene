@@ -1,0 +1,77 @@
+/* ================= صفحة إنشاء الحساب ================= */
+
+/* خلفية الصفحة كلها */
+.signup-page{
+    background: var(--color-bg)
+}
+
+/* الكارت */
+.signup-card{
+    width: 100%;
+    max-width: 420px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-accent);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+}
+
+/* زرار الإغلاق أعلى يمين الكارت */
+.signup-close{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--color-accent);
+}
+.signup-close:hover{
+    color: #fff;
+}
+
+/* مربع الشعار فوق العنوان */
+.signup-icon{
+    width: 64px;
+    height: 64px;
+}
+
+/* التنبيه الصغير تحت الوصف */
+.signup-tip{
+    background: rgba(229, 9, 20, .08);
+    border: 1px solid rgba(229, 9, 20, .2);
+    border-radius: .75rem;
+    padding: .65rem 1rem;
+}
+
+/* تنسيق حقول الفورم داخل الكارت */
+.signup-card .form-control{
+    background: rgba(255, 255, 255, .05);
+    border-color: var(--bs-border-color);
+    color: #fff;
+    padding: .75rem 1rem;
+}
+.signup-card .form-control::placeholder{
+    color: rgba(255, 255, 255, .35);
+}
+.signup-card .form-control:focus{
+    background: rgba(255, 255, 255, .08);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 .2rem rgba(229, 9, 20, .2);
+    color: #fff;
+}
+
+/* زرار إظهار/إخفاء كلمة المرور */
+.password-toggle{
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--bs-secondary-color);
+}
+.password-toggle:hover{
+    color: #fff;
+}
+
+/* رابط Sign In */
+.signup-link{
+    color: var(--bs-primary);
+}
