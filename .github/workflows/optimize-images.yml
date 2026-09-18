@@ -1,0 +1,53 @@
+name: Optimize poster images
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Install WebP tools
+        run: sudo apt-get update && sudo apt-get install -y webp
+
+      - name: Convert poster JPGs to WebP
+        shell: bash
+        run: |
+          set -euo pipefail
+          find assets/images/series -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) -print0 |
+          while IFS= read -r -d '' file; do
+            out="${file%.*}.webp"
+            cwebp -quiet -q 78 -m 6 -mt -resize 400 0 "$file" -o "$out"
+          done
+
+      - name: Switch HTML references to WebP
+        shell: bash
+        run: |
+          set -euo pipefail
+          find . -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 |
+          while IFS= read -r -d '' file; do
+            sed -i -E 's/\.jpg(["'"'"'?#])/\.webp\1/g; s/\.jpeg(["'"'"'?#])/\.webp\1/g' "$file"
+          done
+
+      - name: Commit optimized images
+        shell: bash
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/series . ':!assets/images/series/*.jpg' ':!assets/images/series/*.jpeg' '*.html' '*.css' '*.js' 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No image optimization changes."
+            exit 0
+          fi
+          git commit -m "perf: convert poster images to WebP"
+          git push
