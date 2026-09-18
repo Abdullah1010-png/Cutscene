@@ -56,7 +56,7 @@ const closeModal = document.getElementById("closeModal");
 const closeDetails = document.getElementById("closeDetails");
 
 let watchlist;
-const savedMovies = localStorage.getItem("cineTrackWatchlist");
+const savedMovies = localStorage.getItem("cutsceneWatchlist");
 
 try {
     watchlist = savedMovies ? JSON.parse(savedMovies) : defaultMovies;
@@ -69,7 +69,7 @@ if (!savedMovies) {
 }
 
 function saveWatchlist() {
-    localStorage.setItem("cineTrackWatchlist", JSON.stringify(watchlist));
+    localStorage.setItem("cutsceneWatchlist", JSON.stringify(watchlist));
 }
 
 function updateCount() {
@@ -205,12 +205,12 @@ function setTheme(theme) {
     }
 }
 
-const savedTheme = localStorage.getItem("cineTrackTheme") || "dark";
+const savedTheme = localStorage.getItem("cutsceneTheme") || "dark";
 setTheme(savedTheme);
 
 themeToggle.addEventListener("click", () => {
     const newTheme = document.body.classList.contains("light") ? "dark" : "light";
-    localStorage.setItem("cineTrackTheme", newTheme);
+    localStorage.setItem("cutsceneTheme", newTheme);
     setTheme(newTheme);
 });
 
