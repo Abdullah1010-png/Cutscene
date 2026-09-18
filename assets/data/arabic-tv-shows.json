@@ -1,0 +1,68 @@
+[
+  {
+    "id": 201,
+    "title": "بالطو",
+    "year": 2023,
+    "language": "AR",
+    "genre": ["Comedy", "Drama"],
+    "rating": "8.9",
+    "image": "https://etbilarabi.com/sites/default/files/styles/article_landing/public/2023-02/FB_IMG_1676324178711.jpg?itok=iC1SjJ7L",
+    "description": "طبيب شاب يجد نفسه فجأة مديراً لوحدة صحية في قرية ويواجه مواقف كوميدية غير متوقعة.",
+    "imdblink": "https://www.imdb.com/title/tt26454812/"
+  },
+  {
+    "id": 202,
+    "title": "تحت الوصاية",
+    "year": 2023,
+    "language": "AR",
+    "genre": ["Drama"],
+    "rating": "8.2",
+    "image": "https://assets.cairo360.com/app/uploads/2023/04/30/337398972_1395008578006344_6321060600271101383_n.jpg",
+    "description": "أم أرملة تدخل رحلة صعبة لحماية أبنائها واستعادة حقهم وسط ظروف اجتماعية وقانونية معقدة.",
+    "imdblink": "https://www.imdb.com/title/tt27188714/"
+  },
+  {
+    "id": 203,
+    "title": "موضوع عائلي",
+    "year": 2021,
+    "language": "AR",
+    "genre": ["Comedy", "Drama"],
+    "rating": "8.4",
+    "image": "https://media.altreeq.com/upload/library/U/302/img/images/_640x_36b28c1360c1621cd155f78653e5689623bb48aa734fb0c7acdd58c86963af74.jpg",
+    "description": "رجل يكتشف بعد سنوات أن لديه ابنة، فتتغير حياته وتبدأ رحلة عائلية مليئة بالمواقف الكوميدية والإنسانية.",
+    "imdblink": "https://www.imdb.com/title/tt15963950/"
+  },
+  {
+    "id": 204,
+    "title": "ريفو",
+    "year": 2022,
+    "language": "AR",
+    "genre": ["Drama", "Music"],
+    "rating": "8.4",
+    "image": "https://m.gomhuriaonline.com/Upload/News/25-5-2022_16_31_35_GomhuriaOnline_4371653489095.jpg",
+    "description": "فرقة موسيقية تحاول استعادة قصة نجاحها القديمة، بينما يكشف البحث في الماضي أسراراً جديدة.",
+    "imdblink": "https://www.imdb.com/title/tt21034476/"
+  },
+  {
+    "id": 205,
+    "title": "أشغال شقة",
+    "year": 2024,
+    "language": "AR",
+    "genre": ["Comedy", "Drama"],
+    "rating": "8.1",
+    "image": "https://www.tahiamasr.com/Upload/libfiles/39/9/863.jpg",
+    "description": "كوميديا اجتماعية عن زوجين يحاولان تنظيم حياتهما المنزلية بعد تغييرات كبيرة في الأسرة والعمل.",
+    "imdblink": "https://www.imdb.com/title/tt31779965/"
+  },
+  {
+    "id": 206,
+    "title": "الكبير أوي",
+    "year": 2023,
+    "language": "AR",
+    "genre": ["Comedy", "Drama"],
+    "rating": "8.7",
+    "image": "https://images.justwatch.com/poster/270294297/s718/al-kabeer-awi.jpg",
+    "description": "كوميديا مصرية تدور حول الكبير وعائلته وأهل المزاريطة والمواقف اليومية غير المتوقعة.",
+    "imdblink": "https://www.imdb.com/title/tt1848928/"
+  }
+]
