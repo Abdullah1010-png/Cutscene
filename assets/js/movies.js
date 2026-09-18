@@ -170,28 +170,77 @@ function openDetails(movie) {
 }
 
 function setupControls() {
-  document.querySelectorAll("#genreFilter .filter-btn").forEach(button => button.addEventListener("click", () => {
-    document.querySelectorAll("#genreFilter .filter-btn").forEach(b => b.classList.remove("active"));
-    button.classList.add("active"); currentGenre = button.dataset.filter || "all"; renderMovies();
-  }));
-  document.querySelectorAll("#languageFilter .language-btn").forEach(button => button.addEventListener("click", () => {
-    document.querySelectorAll("#languageFilter .language-btn").forEach(b => b.classList.remove("active"));
-    button.classList.add("active"); currentLanguage = button.dataset.language || "all"; renderMovies();
-  }));
-  $("searchInput")?.addEventListener("input", e => { currentSearch = e.target.value; renderMovies(); });
+
+  // Categories
+  $("genreSelect")?.addEventListener("change", e => {
+    currentGenre = e.target.value || "all";
+    renderMovies();
+  });
+
+  // Language
+  document.querySelectorAll("#languageFilter .language-btn").forEach(button =>
+    button.addEventListener("click", () => {
+      document.querySelectorAll("#languageFilter .language-btn")
+        .forEach(b => b.classList.remove("active"));
+
+      button.classList.add("active");
+      currentLanguage = button.dataset.language || "all";
+      renderMovies();
+    })
+  );
+
+  // Search
+  $("searchInput")?.addEventListener("input", e => {
+    currentSearch = e.target.value;
+    renderMovies();
+  });
+
   $("movieSearchForm")?.addEventListener("submit", e => e.preventDefault());
-  $("sortSelect")?.addEventListener("change", e => { currentSort = e.target.value; renderMovies(); });
+
+  // Sort
+  $("sortSelect")?.addEventListener("change", e => {
+    currentSort = e.target.value;
+    renderMovies();
+  });
+
+  // Watchlist
   document.addEventListener("click", event => {
     const button = event.target.closest("#modalAddWatchlist");
+
     if (!button) return;
+
     const id = Number(button.dataset.id);
-    const index = watchlist.findIndex(item => Number(item.id) === id && (item.type || "movie") === "movie");
+
+    const index = watchlist.findIndex(
+      item =>
+        Number(item.id) === id &&
+        (item.type || "movie") === "movie"
+    );
+
     if (index >= 0) {
-      watchlist.splice(index, 1); button.textContent = "+ Add to Watchlist"; $("modalWatchlistStatus")?.classList.add("d-none");
+      watchlist.splice(index, 1);
+      button.textContent = "+ Add to Watchlist";
+      $("modalWatchlistStatus")?.classList.add("d-none");
     } else {
-      watchlist.push({ id, type: "movie", title: button.dataset.title, year: Number(button.dataset.year), rating: Number(button.dataset.rating), image: button.dataset.image, description: button.dataset.description, language: button.dataset.language, genre: button.dataset.genre ? button.dataset.genre.split(",") : [], dateAdded: Date.now() });
-      button.textContent = "Remove from Watchlist"; $("modalWatchlistStatus")?.classList.remove("d-none");
+      watchlist.push({
+        id,
+        type: "movie",
+        title: button.dataset.title,
+        year: Number(button.dataset.year),
+        rating: Number(button.dataset.rating),
+        image: button.dataset.image,
+        description: button.dataset.description,
+        language: button.dataset.language,
+        genre: button.dataset.genre
+          ? button.dataset.genre.split(",")
+          : [],
+        dateAdded: Date.now()
+      });
+
+      button.textContent = "Remove from Watchlist";
+      $("modalWatchlistStatus")?.classList.remove("d-none");
     }
+
     saveWatchlist();
   });
 }
