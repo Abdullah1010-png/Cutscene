@@ -13,7 +13,7 @@ const arabicMovies = [
     genre: ["Drama", "Thriller"],
     rating: "8.0",
     language: "AR",
-    image: makeArabicPoster("الفيل الأزرق", 2014),
+    image: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/6TQMUpRRzzSmzr6KQserQu9ViNB.jpg",
     description: "طبيب نفسي يعود للعمل في مستشفى للأمراض النفسية، ويواجه حالة غامضة تقوده إلى أسرار غير متوقعة.",
     descriptionEn: "A psychiatrist returns to work at a mental hospital and encounters a mysterious case that leads him into unexpected secrets."
   },
@@ -25,7 +25,7 @@ const arabicMovies = [
     genre: ["Crime", "Drama", "Thriller"],
     rating: "7.4",
     language: "AR",
-    image: makeArabicPoster("تراب الماس", 2018),
+    image: "https://image.tmdb.org/t/p/w500/6TQMUpRRzzSmzr6KQserQu9ViNB.jpg",
     description: "تدفع جريمة غامضة شابًا إلى البحث عن حقيقة عائلته وسلسلة من الأحداث المرتبطة بالماضي.",
     descriptionEn: "A mysterious crime pushes a young man to uncover his family's history and a chain of events connected to the past."
   },
@@ -37,7 +37,7 @@ const arabicMovies = [
     genre: ["Action", "Drama", "History"],
     rating: "7.8",
     language: "AR",
-    image: makeArabicPoster("كيرة والجن", 2022),
+    image: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/cXD23v93qyFwXNBz3Z5kaTMac9h.jpg",
     description: "يتقاطع طريق رجلين في مقاومة الاحتلال خلال فترة تاريخية مضطربة، وتجمعهما مواجهة واحدة.",
     descriptionEn: "Two men cross paths while resisting occupation during a turbulent historical period, joining forces against a common enemy."
   },
@@ -49,14 +49,14 @@ const arabicMovies = [
     genre: ["Comedy", "Drama"],
     rating: "7.1",
     language: "AR",
-    image: makeArabicPoster("إكس لارج", 2011),
+    image: "https://image.tmdb.org/t/p/original/dBK3YVsY27F7VYWXdSrXqot947K.jpg",
     description: "كوميديا اجتماعية عن شاب يحاول التعامل مع حياته اليومية وعلاقاته ونظرته إلى نفسه والآخرين.",
     descriptionEn: "A social comedy about a young man dealing with everyday life, relationships, and how he sees himself and others."
   }
 ];
 
 function makeArabicPoster(title, year) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><rect width="600" height="900" fill="#171a20"/><rect x="28" y="28" width="544" height="844" rx="20" fill="#242832" stroke="#8066ff" stroke-width="3"/><text x="300" y="170" text-anchor="middle" fill="#8066ff" font-size="32" font-family="Arial">CUTSCENE</text><text x="300" y="430" text-anchor="middle" direction="rtl" fill="#ffffff" font-size="55" font-family="Arial" font-weight="bold">${title}</text><text x="300" y="500" text-anchor="middle" fill="#aeb2bc" font-size="25" font-family="Arial">${year}</text><text x="300" y="790" text-anchor="middle" fill="#ed5b69" font-size="28" font-family="Arial">AR • عربي</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#151820"/><stop offset="1" stop-color="#302044"/></linearGradient></defs><rect width="600" height="900" fill="url(#g)"/><circle cx="470" cy="150" r="150" fill="#8066ff" opacity=".12"/><rect x="30" y="30" width="540" height="840" rx="24" fill="none" stroke="#8066ff" stroke-width="3" opacity=".8"/><text x="300" y="145" text-anchor="middle" fill="#a78bfa" font-size="30" font-family="Arial" letter-spacing="4">CUTSCENE</text><text x="300" y="450" text-anchor="middle" direction="rtl" fill="#fff" font-size="54" font-family="Arial" font-weight="700">${title}</text><text x="300" y="515" text-anchor="middle" fill="#c7cad2" font-size="24" font-family="Arial">${year}</text><text x="300" y="810" text-anchor="middle" fill="#ff6b7a" font-size="25" font-family="Arial">AR • عربي</text></svg>`;
   return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 }
 
@@ -131,15 +131,19 @@ function renderMovies() {
     const col = document.createElement("div");
     col.className = "col-6 col-md-4 col-lg-4 col-xl-3";
     const isArabic = movie.language === "AR";
-    const displayTitle = isArabic ? movie.title : movie.title;
+    const displayTitle = movie.title;
     col.innerHTML = `
       <div class="movies-careds ${isArabic ? "arabic-movie" : "english-movie"}" data-id="${movie.id}" data-title="${escapeAttribute(movie.title)}" data-title-en="${escapeAttribute(movie.titleEn || movie.title)}" data-year="${movie.year}" data-rating="${movie.rating}" data-image="${escapeAttribute(movie.image)}" data-description="${escapeAttribute(movie.description || "No description.")}" data-description-en="${escapeAttribute(movie.descriptionEn || movie.description || "No description.")}" data-language="${movie.language}" data-type="movie" data-imdblink="${escapeAttribute(movie.imdblink || "")}">
         <div class="movies-postar">
-          <img src="${escapeAttribute(movie.image)}" alt="${escapeAttribute(displayTitle)}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x300?text=No+Image'" />
+          <img src="${escapeAttribute(movie.image)}" alt="${escapeAttribute(displayTitle)}" loading="lazy" onerror="this.src=makeArabicPoster('${escapeAttribute(displayTitle)}','${movie.year}')" />
+          <span class="content-type-badge">FILM</span>
           <span class="language-badge-card ${isArabic ? "ar-badge" : "en-badge"}">${isArabic ? "AR" : "E"}</span>
-          <span class="movies-rating">${movie.rating}/10</span>
+          <span class="movies-rating"><i class="fa-solid fa-star"></i> ${movie.rating}</span>
+          <span class="poster-play"><i class="fa-solid fa-play"></i></span>
         </div>
-        <h4>${escapeHtml(displayTitle)}</h4><p>${movie.year}</p>
+        <div class="movie-card-info">
+          <h4>${escapeHtml(displayTitle)}</h4><p>${movie.year} <span>•</span> ${isArabic ? "فيلم" : "Movie"}</p>
+        </div>
       </div>`;
     container.appendChild(col);
   });
