@@ -31,33 +31,115 @@
           <div class="d-flex align-items-center gap-2 sort-container"><label for="sortSelect" class="mb-0">Sort by:</label><select id="sortSelect" class="form-select rounded-pill"><option value="date">Recently Added</option><option value="rating-desc">Rating: High to Low</option><option value="rating-asc">Rating: Low to High</option><option value="year-desc">Year: Newest</option><option value="year-asc">Year: Oldest</option><option value="title-asc">Title: A-Z</option><option value="title-desc">Title: Z-A</option></select></div>
         </div>
 
-        <div class="catalog-section-title">Categories</div>
-        <div class="d-flex gap-2 flex-nowrap overflow-auto pb-2 mb-3 library-filters" id="libraryGenreFilter">
-          <button type="button" class="btn filter-btn active rounded-pill px-4 py-2" data-filter="all">All</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="action">Action</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="drama">Drama</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="comedy">Comedy</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="adventure">Adventure</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="crime">Crime</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="thriller">Thriller</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="fantasy">Fantasy</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="sci-fi">Sci-Fi</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="animation">Animation</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-filter="anime">Anime</button>
-        </div>
+<div class="catalog-controls mb-4">
 
-        <div class="d-flex gap-2 flex-nowrap overflow-auto mb-3" id="libraryTypeFilter">
-          <button type="button" class="btn filter-btn active rounded-pill px-4 py-2" data-type="all">All</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-type="movie">Movies</button>
-          <button type="button" class="btn filter-btn rounded-pill px-4 py-2" data-type="tv">TV Shows</button>
-        </div>
+  <!-- Categories -->
+  <div class="filter-control">
 
-        <div class="language-filter d-flex align-items-center gap-2 flex-nowrap overflow-auto mb-4" id="libraryLanguageFilter">
-          <span class="language-label">Language:</span>
-          <button type="button" class="language-btn active" data-language="all">All</button>
-          <button type="button" class="language-btn" data-language="AR"><span class="language-badge ar-badge">AR</span> عربي</button>
-          <button type="button" class="language-btn" data-language="EN"><span class="language-badge en-badge">E</span> English</button>
-        </div>
+    <label for="genreSelect">
+      Categories:
+    </label>
+
+    <select
+      id="genreSelect"
+      class="form-select rounded-pill">
+
+      <option value="all">
+        All Categories
+      </option>
+
+      <option value="action">Action</option>
+      <option value="drama">Drama</option>
+      <option value="comedy">Comedy</option>
+      <option value="adventure">Adventure</option>
+      <option value="crime">Crime</option>
+      <option value="thriller">Thriller</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="sci-fi">Sci-Fi</option>
+      <option value="animation">Animation</option>
+      <option value="anime">Anime</option>
+
+    </select>
+
+  </div>
+
+  <!-- Movies / TV Shows -->
+  <div
+    class="type-filter"
+    id="libraryTypeFilter">
+
+    <span class="language-label">
+      Type:
+    </span>
+
+    <button
+      type="button"
+      class="filter-btn active"
+      data-type="all">
+      All
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-type="movie">
+      Movies
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-type="tv">
+      TV Shows
+    </button>
+
+  </div>
+
+  <!-- Language -->
+  <div
+    class="language-filter"
+    id="libraryLanguageFilter">
+
+    <span class="language-label">
+      Language:
+    </span>
+
+    <button
+      type="button"
+      class="language-btn active"
+      data-language="all">
+      All
+    </button>
+
+    <button
+      type="button"
+      class="language-btn"
+      data-language="AR">
+
+      <span class="language-badge ar-badge">
+        AR
+      </span>
+
+      عربي
+
+    </button>
+
+    <button
+      type="button"
+      class="language-btn"
+      data-language="EN">
+
+      <span class="language-badge en-badge">
+        E
+      </span>
+
+      English
+
+    </button>
+
+  </div>
+
+</div>
 
         <div class="row g-4" id="watchlistGrid"></div>
       </div>
