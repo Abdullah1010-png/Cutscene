@@ -26,7 +26,7 @@ jobs:
           find assets/images/series -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) -print0 |
           while IFS= read -r -d '' file; do
             out="${file%.*}.webp"
-            cwebp -quiet -q 78 -m 6 -mt -resize 400 0 "$file" -o "$out"
+            cwebp -quiet -q 65 -m 6 -mt -resize 320 0 "$file" -o "$out"
           done
 
       - name: Switch HTML references to WebP
