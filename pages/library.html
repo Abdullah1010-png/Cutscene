@@ -3,94 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Library</title>
+    <title>Cutscene - Library</title>
     <link rel="icon" href="../assets/images/logo.png" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" />
     <link rel="stylesheet" href="../assets/css/base.css" />
     <link rel="stylesheet" href="../assets/css/library.css" />
     <link rel="stylesheet" href="../assets/css/theme-toggle.css" />
   </head>
   <body>
-    <!-- ===== NAVBAR ===== -->
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
       <div class="container">
         <a class="navbar-brand" href="dashboard.html">
-          <img
-            src="../assets/images/logo.png"
-            alt="Cutscene Logo"
-            width="50"
-            height="50"
-          />
+          <img src="../assets/images/logo.png" alt="Cutscene Logo" width="50" height="50" />
         </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="dashboard.html">Dashboard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="movies.html">Movies</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="tv-shows.html">TV Shows</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="library.html">Library</a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="movies.html">Movies</a></li>
+            <li class="nav-item"><a class="nav-link" href="tv-shows.html">TV Shows</a></li>
+            <li class="nav-item"><a class="nav-link active" href="library.html">Library</a></li>
           </ul>
-          <!-- No search needed, but we keep it for consistency -->
-          <form class="d-flex" role="search">
-            <input
-              class="form-control rounded-5 me-2"
-              type="search"
-              placeholder="Search"
-              disabled
-            />
+          <form class="d-flex" role="search" id="librarySearchForm">
+            <input class="form-control rounded-5 me-2" id="librarySearch" type="search" placeholder="Search library..." aria-label="Search library" />
           </form>
-          <button
-            class="theme-toggle-btn ms-lg-3"
-            id="themeToggle"
-            type="button"
-            aria-pressed="false"
-            aria-label="Toggle light and dark mode"
-          >
-            <span class="theme-toggle-icon theme-icon-moon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </span>
-            <span class="theme-toggle-icon theme-icon-sun" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-            </span>
+          <button class="theme-toggle-btn ms-lg-3" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle light and dark mode">
+            <span class="theme-toggle-icon theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+            <span class="theme-toggle-icon theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
             <span class="theme-toggle-knob"></span>
           </button>
         </div>
       </div>
     </nav>
 
-    <!-- ===== WATCHLIST SECTION ===== -->
     <section class="watchlist-page">
       <div class="container pt-5 page-header">
-        <h3 class="mb-3">
-          My Watchlist <span id="movieCount">(0 titles)</span>
-        </h3>
+        <h3 class="mb-3">My Watchlist <span id="movieCount">(0 titles)</span></h3>
         <div class="sort-container">
           <span>Sort by:</span>
           <select id="sortSelect">
@@ -101,88 +52,42 @@
           </select>
         </div>
       </div>
-      <!-- Dynamic grid -->
       <div class="container">
         <div class="row g-4" id="watchlistGrid"></div>
       </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer class="custom-footer">
-      <div class="container text-center">
-        <p class="mb-0">All Rights Reserved Cutscene 2026 ©.</p>
-      </div>
+      <div class="container text-center"><p class="mb-0">All Rights Reserved © Cutscene 2026.</p></div>
     </footer>
 
-    <!-- ===== DETAIL MODAL ===== -->
     <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-dark text-white border-secondary">
           <div class="modal-header border-secondary">
             <h5 class="modal-title" id="modalTitle">Details</h5>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-            ></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-md-4">
-                <img
-                  id="modalImage"
-                  src=""
-                  alt="Poster"
-                  class="img-fluid rounded"
-                />
-              </div>
+              <div class="col-md-4"><img id="modalImage" src="" alt="Poster" class="img-fluid rounded" /></div>
               <div class="col-md-8">
                 <h3 id="modalTitleText"></h3>
                 <p><strong>Year:</strong> <span id="modalYear"></span></p>
                 <p><strong>Rating:</strong> <span id="modalRating"></span></p>
-                <p>
-                  <strong>Description:</strong>
-                  <span id="modalDescription">No description available.</span>
-                </p>
-                <div id="modalImdbContainer" class="d-none mt-2">
-                  <a
-                    id="modalImdbLink"
-                    href="#"
-                    target="_blank"
-                    class="btn btn-outline-light btn-sm"
-                  >
-                    View on IMDb
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  </a>
-                </div>
-                <button class="btn btn-danger mt-3" id="modalAddWatchlist">
-                  + Add to Watchlist
-                </button>
-                <span id="modalWatchlistStatus" class="ms-3 text-success d-none"
-                  >✓ In your watchlist</span
-                >
+                <p><strong>Description:</strong> <span id="modalDescription">No description available.</span></p>
+                <div id="modalImdbContainer" class="d-none mt-2"><a id="modalImdbLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm">View on IMDb <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                <button class="btn btn-danger mt-3" id="modalAddWatchlist">Remove from Watchlist</button>
+                <span id="modalWatchlistStatus" class="ms-3 text-success">✓ In your watchlist</span>
               </div>
             </div>
           </div>
-          <div class="modal-footer border-secondary">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
+          <div class="modal-footer border-secondary"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
         </div>
       </div>
     </div>
 
-    <!-- ===== SCRIPTS ===== -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../assets/js/library.js"></script>
     <script src="../assets/js/theme-toggle.js"></script>
   </body>
