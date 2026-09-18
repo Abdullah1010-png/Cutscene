@@ -23,6 +23,21 @@ section .links-movies button:hover,
     border:none !important;
 }
 
+/* Keep Sort by + select together on one row */
+.sort-container{
+    flex-wrap:nowrap !important;
+    white-space:nowrap;
+}
+.sort-container label{
+    white-space:nowrap;
+    flex:0 0 auto;
+}
+.sort-container select{
+    width:220px;
+    min-width:220px;
+    flex:0 0 220px;
+}
+
 .language-filter{
     border-top:1px solid var(--color-border-soft);
     padding-top:14px;
@@ -143,3 +158,9 @@ section .links-movies button:hover,
 .arabic-movie h4,
 .arabic-movie p{ direction:rtl; text-align:right; }
 .arabic-movie h4{ font-family:Arial,"Tahoma",sans-serif; }
+
+/* Responsive: keep the controls together whenever there is enough room */
+@media (max-width: 575.98px){
+    .sort-container{ width:100%; justify-content:flex-start; }
+    .sort-container select{ width:190px; min-width:190px; flex-basis:190px; }
+}
