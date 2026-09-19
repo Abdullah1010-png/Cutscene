@@ -119,6 +119,10 @@ function openDetails(show) {
     imdb.classList.add("d-none");
   }
 
+  const watchContainer = $("modalWatchNowContainer");
+  const watchLink = $("modalWatchNow");
+  if (show.watchLink) { watchLink.href = show.watchLink; watchContainer.classList.remove("d-none"); } else { watchLink.removeAttribute("href"); watchContainer.classList.add("d-none"); }
+
   const button = $("modalAddWatchlist");
   const status = $("modalWatchlistStatus");
   const saved = watchlist.some(item => Number(item.id) === Number(show.id) && (item.type || "movie") === "tv");
