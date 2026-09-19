@@ -224,3 +224,8 @@ a:hover { color: var(--color-accent); }
 
 /* Cutscene brand lockup */
 .cutscene-brand{display:inline-flex!important;align-items:center;gap:10px;color:var(--color-text)!important}.cutscene-logo-mark{width:38px;height:36px;object-fit:contain;flex:0 0 auto}.cutscene-brand-name{font-family:var(--font-display);font-size:1.45rem;font-weight:800;letter-spacing:.01em;line-height:1}.cutscene-brand:hover .cutscene-brand-name{color:var(--color-accent)}.watch-now-btn{display:inline-flex;align-items:center;gap:7px}
+
+
+/* Watch Now - Cutscene themed */
+.watch-now-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border:1px solid rgba(229,9,20,.55);border-radius:var(--radius-sm);background:linear-gradient(135deg,rgba(229,9,20,.18),rgba(229,9,20,.08));color:var(--color-text)!important;box-shadow:0 6px 18px rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,255,255,.03);font-weight:700;transition:transform .25s ease,background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+.watch-now-btn:hover{background:var(--color-accent);border-color:var(--color-accent);color:#fff!important;transform:translateY(-2px);box-shadow:0 8px 22px rgba(229,9,20,.28)}
