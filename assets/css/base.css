@@ -220,3 +220,7 @@ a:hover { color: var(--color-accent); }
     .filter-control select { flex: 1; width: auto; min-width: 0; }
     .type-filter, .language-filter { width: 100%; padding-bottom: 4px; }
 }
+
+
+/* Cutscene brand lockup */
+.cutscene-brand{display:inline-flex!important;align-items:center;gap:10px;color:var(--color-text)!important}.cutscene-logo-mark{width:38px;height:36px;object-fit:contain;flex:0 0 auto}.cutscene-brand-name{font-family:var(--font-display);font-size:1.45rem;font-weight:800;letter-spacing:.01em;line-height:1}.cutscene-brand:hover .cutscene-brand-name{color:var(--color-accent)}.watch-now-btn{display:inline-flex;align-items:center;gap:7px}
