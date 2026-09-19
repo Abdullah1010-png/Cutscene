@@ -152,6 +152,10 @@ function openDetails(movie) {
   const imdb = $("modalImdbContainer");
   const imdbLink = $("modalImdbLink");
   if (movie.imdblink) { imdbLink.href = movie.imdblink; imdb.classList.remove("d-none"); } else { imdb.classList.add("d-none"); }
+  const watchContainer = $("modalWatchNowContainer");
+  const watchLink = $("modalWatchNow");
+  if (movie.watchLink) { watchLink.href = movie.watchLink; watchContainer.classList.remove("d-none"); } else { watchLink.removeAttribute("href"); watchContainer.classList.add("d-none"); }
+
   const button = $("modalAddWatchlist");
   const status = $("modalWatchlistStatus");
   const saved = watchlist.some(item => Number(item.id) === Number(movie.id) && (item.type || "movie") === "movie");
