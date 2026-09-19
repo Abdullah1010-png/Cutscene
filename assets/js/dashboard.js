@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("modalRating").textContent = rating;
     document.getElementById("modalImage").src = image;
     document.getElementById("modalDescription").textContent = description;
+    const watchContainer = document.getElementById("modalWatchNowContainer");
+    const watchLink = document.getElementById("modalWatchNow");
+    if (item && item.watchLink) { watchLink.href = item.watchLink; watchContainer.classList.remove("d-none"); }
+    else { watchLink.removeAttribute("href"); watchContainer.classList.add("d-none"); }
 
     modal.show();
   });
